@@ -51,7 +51,7 @@ Set up Identity, roles, and an admin user management page.
 ---
 
 ### Sprint 2 — Weeks 3–4
-**File Management + Session Cart + Caching**
+**File Management + Session Cart + Pagination & Caching**
 
 ---
 
@@ -96,10 +96,27 @@ Build a fully functional cart stored in the user's session.
 
 ---
 
-#### Task 3 — Caching Categories
+#### Task 3 — Pagination, Search, Sorting & Caching
 
-Cache the Category list so it isn't re-queried on every page load.
+Make the product list scalable and fast — skills that apply to almost every CRUD screen.
 
+**Pagination**
+- Add `PageNumber` and `PageSize` query parameters to the product list action (defaults: page 1, size 10)
+- Use `.Skip((page - 1) * pageSize).Take(pageSize)` in the repository to fetch only the current page
+- Create a `PaginatedResult<T>` wrapper: `Items`, `TotalCount`, `PageNumber`, `PageSize`, `TotalPages`
+- Render a pagination control in the view: Previous / Next buttons and page number links, disabled appropriately at boundaries
+
+**Search**
+- Add a `search` query parameter; filter products with `.Where(p => p.Name.Contains(search) || p.Description.Contains(search))` before applying pagination
+- Preserve the search term across page navigations by including it in every pagination link
+- Display the active search term in the search input so the user always sees what they filtered by
+
+**Sorting**
+- Add a `sortBy` query parameter accepting values: `name_asc`, `name_desc`, `price_asc`, `price_desc`
+- Apply the correct `.OrderBy` / `.OrderByDescending` before pagination
+- Highlight the active sort option in the UI (e.g. bold or an arrow indicator on the column header)
+
+**Caching**
 - Inject `IMemoryCache` into `CategoryService` (or wherever categories are fetched)
 - On every call to `GetAllCategoriesAsync`:
   - Try `_cache.TryGetValue("categories", out List<CategoryDto> cached)` — return `cached` if found
@@ -110,7 +127,7 @@ Cache the Category list so it isn't re-queried on every page load.
 ---
 
 ### Sprint 3 — Weeks 5–6
-**Advanced EF Core + Email & Payment**
+**Advanced EF Core + Email, Orders & Reviews**
 
 ---
 
@@ -119,6 +136,9 @@ Cache the Category list so it isn't re-queried on every page load.
 Take full control of queries and implement safe deletion.
 
 - Add two columns to `Product` and `Category`: `bool IsDeleted` (default `false`) and `DateTime? DeletedAt`
+- Add `CreatedAt` and `UpdatedAt` as regular properties on `Product` and `Category`:
+  - Declare them directly on the entity class: `public DateTime CreatedAt { get; set; }` and `public DateTime UpdatedAt { get; set; }`
+  - Populate them automatically by overriding `SaveChanges` / `SaveChangesAsync` in `AppDbContext`: set `CreatedAt` on `EntityState.Added`, set `UpdatedAt` on both `Added` and `Modified`
 - In `AppDbContext.OnModelCreating`, add a Global Query Filter on both entities:
   ```csharp
   modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsDeleted);
@@ -131,15 +151,12 @@ Take full control of queries and implement safe deletion.
   - Set `MaxLength` on string columns (e.g. `Name` max 200, `Description` max 2000)
   - Mark required fields with `.IsRequired()`
   - Add an index on `Product.CategoryId`
-- Add `CreatedAt` and `UpdatedAt` as Shadow Properties:
-  - Declare them in `OnModelCreating`: `modelBuilder.Entity<Product>().Property<DateTime>("CreatedAt")`
-  - Populate them automatically in `SaveChanges` override: set `CreatedAt` on `EntityState.Added`, set `UpdatedAt` on both `Added` and `Modified`
 
 ---
 
-#### Task 2 — Email & Payment Integration
+#### Task 2 — Email, Orders & Checkout
 
-Send transactional emails and accept payments.
+Send transactional emails and build a complete order flow with fake payment.
 
 - Create `IEmailService` in `Core/Interfaces` with one method: `Task SendAsync(string to, string subject, string htmlBody)`
 - Implement `MailKitEmailService` in `Infrastructure`:
@@ -161,15 +178,28 @@ Send transactional emails and accept payments.
   - Create the `Order` + `OrderItems` in the database
   - Set `Status = Paid`, call `ClearCart()`, send the Order Confirmation Email
   - Redirect to a "Thank You" page
-- Integrate **Stripe Sandbox** (replace the fake payment):
-  - Install `Stripe.net`
-  - On Checkout POST: create a `PaymentIntent` via Stripe API and return the `client_secret` to the view
-  - Use Stripe.js on the frontend to confirm the card payment
-  - On success callback: finalize the order in the database and send the email
 - Add a **My Orders** page for customers: list all their orders with date, total, and status badge
 
 ---
 
+#### Task 3 — Product Reviews
+
+Let customers rate and review products — a small feature with high teaching value.
+
+- Add a `Review` entity: `Id`, `ProductId`, `UserId`, `Rating` (1–5), `Comment`, `CreatedAt`
+  - Configure the relationship in Fluent API: one `Product` has many `Reviews`
+  - Run a migration
+- On the Product Details page:
+  - Display all approved reviews: reviewer name, star rating, comment, date
+  - Show the average rating (use `.Average(r => r.Rating)`) next to the product title
+  - Render a "Write a Review" form below (visible to logged-in customers only)
+- On Review submit:
+  - Validate that `Rating` is between 1 and 5
+  - Prevent a user from submitting more than one review per product — check for an existing review before saving
+  - Save the review and redirect back to the product page
+- Allow a user to **Edit** or **Delete** their own review:
+  - Protect these actions with an ownership check: `review.UserId == currentUserId` — return `403` otherwise
+- Add an **admin moderation panel**: list all reviews with an "Approve / Reject" toggle; only approved reviews appear on the product page
 ## 🚀 Project 2 — Event Management System (REST API)
 
 > **Domain:** A platform where organizers create and publish events, attendees register and pay for tickets, and admins get full reporting. Think Eventbrite, but as a backend API.
