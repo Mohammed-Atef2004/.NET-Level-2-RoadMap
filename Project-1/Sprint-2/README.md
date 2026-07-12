@@ -1,15 +1,12 @@
-## 🏃 Sprint 2 — State Management & Media
-
+# 🏃 Sprint 2 — State Management & Media
 **Weeks 3–4 · Project 1: E-Commerce MVC**
 
-### 🎯 Goal
-
-Build features that every real-world e-commerce application needs while learning state management, file handling, caching and better user experience.
+## 🎯 Goal
+Build features that every real-world e-commerce application needs while learning state management, file handling, caching, and better user experience.
 
 ---
 
 ## 📚 Concepts
-
 - File Upload & Validation
 - Session vs Cookies
 - Shopping Cart
@@ -24,9 +21,7 @@ Build features that every real-world e-commerce application needs while learning
 ## 📝 Features
 
 ### 📦 Product Image Management
-
 Implement complete image lifecycle management.
-
 - Upload product images
 - Validate file extension and size
 - Rename images using GUID
@@ -37,9 +32,7 @@ Implement complete image lifecycle management.
 ---
 
 ### 🛒 Shopping Cart
-
 Implement a complete shopping cart using Session.
-
 - Add products to cart
 - Increase / decrease quantity
 - Remove items
@@ -50,9 +43,7 @@ Implement a complete shopping cart using Session.
 ---
 
 ### 🔍 Product Browsing
-
 Improve product discovery.
-
 - Search by product name
 - Search by description
 - Filter by category
@@ -65,9 +56,7 @@ Improve product discovery.
 ---
 
 ### ⚡ Performance Optimization
-
 Improve application performance.
-
 - Cache categories using IMemoryCache
 - Invalidate cache after CRUD operations
 - Minimize unnecessary database queries
@@ -75,27 +64,23 @@ Improve application performance.
 ---
 
 ## ✅ Deliverable
-
-A complete shopping experience with image management, session cart, searching, sorting, pagination and caching.
+A complete shopping experience with image management, session cart, searching, sorting, pagination, and caching.
 
 ---
 
 ## 🔗 Resource Hub
 
-### 🇪🇬 Egyptian Creators
-
-- Ahmed Rabie — ASP.NET Core Session & Caching
-- Islam El-Mohammady — File Upload
-- Mohamed El-Zohairy — Repository Pattern
+### 🇪🇬 Egyptian / Arabic Creators
+- **Passionate Coders — Mohamed El-Mahdy** — full Arabic-language ASP.NET Core MVC playlist (covers Session, file handling, and more): https://www.youtube.com/channel/UCs676GCreDp_YhzppnlTOgQ
 
 ### 🇬🇧 English Creators
-
-- Nick Chapsas — Caching
-- Julio Casal — ASP.NET Core MVC
-- Tim Corey — File Upload
+- **Nick Chapsas — "The Only Cache You Should Be Using in .NET"** (IMemoryCache): https://www.youtube.com/watch?v=SNoJtwiY4c4
+- **Milan Jovanović — "Adding Filtering, Sorting And Pagination To a REST API (.NET 7)"**: https://www.youtube.com/watch?v=X8zRvXbirMU
+- **Code Maze — "Pagination in ASP.NET Core Web API with Onion Architecture"**: https://www.youtube.com/watch?v=MdK9PeXksg4
 
 ### 📄 Official Docs
+- File Upload: https://learn.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads
+- Session & State Management: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state
+- In-Memory Cache: https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory
 
-- File Upload
-- Session & State Management
-- Memory Cache
+> **Note:** A dedicated, verified Arabic video specifically on File Upload or Repository Pattern could not be confirmed with a working link, so those topics are covered instead via the Passionate Coders playlist above and the official Microsoft docs.
