@@ -83,4 +83,4 @@ A complete shopping experience with image management, session cart, searching, s
 - Session & State Management: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state
 - In-Memory Cache: https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory
 
-> **Note:** A dedicated, verified Arabic video specifically on File Upload or Repository Pattern could not be confirmed with a working link, so those topics are covered instead via the Passionate Coders playlist above and the official Microsoft docs.
+
