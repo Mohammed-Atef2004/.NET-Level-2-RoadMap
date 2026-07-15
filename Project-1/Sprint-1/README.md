@@ -18,11 +18,10 @@ Build a maintainable MVC application by introducing layered architecture, authen
 | 2 | Repository Pattern |
 | 3 | Unit of Work |
 | 4 | Dependency Injection |
-| 5 | DTOs |
-| 6 | AutoMapper |
-| 7 | ASP.NET Core Identity |
-| 8 | Authentication & Authorization |
-| 9 | Roles & Policies |
+| 5 | AutoMapper |
+| 6 | ASP.NET Core Identity |
+| 7 | Authentication & Authorization |
+| 8 | Roles & Policies |
 
 ---
 
@@ -37,7 +36,7 @@ Refactor the project into a clean N-Tier architecture.
 - Implement Unit of Work
 - Register services using Dependency Injection
 - Remove direct DbContext usage from controllers
-- Introduce DTOs and AutoMapper
+- Introduce ViewModels and AutoMapper
 
 ---
 
