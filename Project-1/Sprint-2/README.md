@@ -70,9 +70,6 @@ A complete shopping experience with image management, session cart, searching, s
 
 ## 🔗 Resource Hub
 
-### 🇪🇬 Egyptian / Arabic Creators
-- **Passionate Coders — Mohamed El-Mahdy** — full Arabic-language ASP.NET Core MVC playlist (covers Session, file handling, and more): https://www.youtube.com/channel/UCs676GCreDp_YhzppnlTOgQ
-
 ### 🇬🇧 English Creators
 - **Nick Chapsas — "The Only Cache You Should Be Using in .NET"** (IMemoryCache): https://www.youtube.com/watch?v=SNoJtwiY4c4
 - **Milan Jovanović — "Adding Filtering, Sorting And Pagination To a REST API (.NET 7)"**: https://www.youtube.com/watch?v=X8zRvXbirMU
@@ -82,5 +79,3 @@ A complete shopping experience with image management, session cart, searching, s
 - File Upload: https://learn.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads
 - Session & State Management: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state
 - In-Memory Cache: https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory
-
-
