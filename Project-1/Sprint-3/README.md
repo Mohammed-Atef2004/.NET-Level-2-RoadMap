@@ -95,21 +95,26 @@ A complete MVC E-Commerce application featuring authentication, shopping cart, c
 
 ## 🔗 Resource Hub
 
-### 🇪🇬 Egyptian Creators
-
-- Mohamed El-Zohairy — EF Core
-- Mustafa Salem — Stripe
-- Islam El-Mohammady — MailKit
+### 🇪🇬 Egyptian / Arabic Creators
+- **Passionate Coders — Mohamed El-Mahdy** — ASP.NET Core & EF Core in Arabic
+  https://www.youtube.com/@PassionateCoders
+- **Khalid Essaadani** — ASP.NET Core From Scratch course in Arabic (full Bookstore project)
+  https://www.youtube.com/user/EssaadaniTV
 
 ### 🇬🇧 English Creators
-
-- Tim Corey — EF Core
-- Nick Chapsas — EF Core Best Practices
-- Julio Casal — MailKit
+- **Milan Jovanović** — Soft Delete & Global Query Filters in EF Core (article dedicated exactly to this topic)
+  https://www.milanjovanovic.tech/blog/implementing-soft-delete-with-ef-core
+- **Nick Chapsas (Dometrain)** — Sending Email with C# in .NET — MailKit/MimeKit/MailPit
+  https://dometrain.com/blog/sending-email-with-dotnet/
 
 ### 📄 Official Docs
-
-- EF Core Fluent API
-- Global Query Filters
-- MailKit
-- Stripe .NET
+- EF Core Fluent API & Entity Configurations
+  https://learn.microsoft.com/en-us/ef/core/modeling
+- Global Query Filters (EF Core)
+  https://learn.microsoft.com/en-us/ef/core/querying/filters
+- MailKit (official repo — SMTP, HTML emails)
+  https://github.com/jstedfast/MailKit
+- Stripe .NET — Payment Intents Quickstart
+  https://docs.stripe.com/payments/quickstart?lang=dotnet
+- Stripe .NET SDK (official repo)
+  https://github.com/stripe/stripe-dotnet
