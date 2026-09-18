@@ -1,94 +1,174 @@
-## 🏃 Sprint 5 — API Security & Reliability
+# 🏃 Sprint 5 — Core Event Management & Security
 
-**Weeks 9–10 · Project 2: Event Management API**
-
-### 🎯 Goal
-
-Secure the API using JWT authentication and build resilient APIs with centralized error handling and structured responses.
+**Duration:** Weeks 9–10
 
 ---
 
-## 📚 Concepts
+## 🎯 Sprint Goal
 
-- JWT Authentication
-- Refresh Tokens
-- Role-based Authorization
-- Result Pattern
-- Global Exception Handling
-- Problem Details
-- Structured Logging
+Build the core Event Management API on top of the Light Clean Architecture established in Sprint 4.
+
+Focus on event management, ticketing, registration, authentication, authorization, and validation.
 
 ---
 
-## 📝 Features
+## Task 1 — Event Management
 
-### 🔐 Authentication
+### Requirements
 
-Secure the API.
+Create:
+
+- `Event`
+- `Venue`
+- `Speaker`
+
+Implement:
+
+- Create Event
+- Get Event
+- Get Events
+- Update Event
+- Delete Event
+- Publish Event
+- Cancel Event
+
+### Basic Rules
+
+- Start date < End date
+- Registration deadline < Start date
+- Cancelled events cannot accept registrations
+- Only the organizer can modify their event
+
+### Concepts
+
+- CQRS
+- MediatR
+- DTOs
+- EF Core Relationships
+- Business Validation
+
+### Deliverable
+
+A functional Event Management module.
+
+---
+
+## Task 2 — Tickets & Registration
+
+### Requirements
+
+Create:
+
+**`TicketType`**
+
+- `Name`
+- `Price`
+- `Quantity`
+- `EventId`
+
+**`Registration`**
+
+- `EventId`
+- `TicketTypeId`
+- `UserId`
+- `RegisteredAt`
+- `Status`
+
+Implement:
+
+```
+Register
+Get My Registrations
+Get Registration
+Cancel Registration
+```
+
+### Rules
+
+- Cannot register twice for the same event
+- Cannot register after the registration deadline
+- Cannot register for a cancelled event
+- Cannot exceed ticket quantity
+- User can cancel their own registration
+
+### Deliverable
+
+A complete **Event → Ticket → Registration** workflow.
+
+---
+
+## Task 3 — Authentication & Authorization
+
+### Requirements
+
+Implement:
 
 - Register
 - Login
 - Refresh Token
 - Logout
+
+Roles:
+
+```
+Admin
+Organizer
+Attendee
+```
+
+Authorization:
+
+| Role | Permissions |
+|------|-------------|
+| **Admin** | Manage system |
+| **Organizer** | Manage own events |
+| **Attendee** | Register for events |
+
+Use:
+
+- JWT
+- Claims
 - Role-based Authorization
+- Policy-based Authorization
 
-### ⚠️ Error Handling
+### Deliverable
 
-Build production-ready error handling.
-
-- Global Exception Middleware
-- Problem Details responses
-- Result Pattern
-- Business error handling
-
-### 📂 Media Management
-
-Manage uploaded files.
-
-- Event cover upload
-- Speaker photo upload
-- Image validation
-- Image replacement
-
-### 📱 QR Code Generation
-
-Generate QR Codes for registrations.
-
-- QR Code creation
-- Store QR images
-- Download QR Code
-
-### 📋 Logging
-
-Improve observability.
-
-- Structured logging with Serilog
-- Request logging
-- Exception logging
+A secured API with authentication and authorization.
 
 ---
 
-## ✅ Deliverable
+## Task 4 — Validation & Error Handling
 
-A secure API featuring JWT authentication, centralized error handling, QR code generation and production-grade logging.
+### Requirements
 
----
+Use **FluentValidation** for:
 
-## 🔗 Resource Hub
+- `CreateEvent`
+- `UpdateEvent`
+- `CreateTicket`
+- `RegisterForEvent`
 
-### 🇪🇬 Egyptian Creators
+Use the existing Validation Pipeline.
 
-- Mohamed El-Zohairy — JWT
-- Islam El-Mohammady — Serilog
+Implement:
 
-### 🇬🇧 English Creators
+```
+Result<T>
+ProblemDetails
+Global Exception Handling
+```
 
-- Milan Jovanović
-- Julio Casal
-- Nick Chapsas
+Handle:
 
-### 📄 Official Docs
+| Status Code | Meaning |
+|-------------|---------|
+| `400` | Bad Request |
+| `401` | Unauthorized |
+| `403` | Forbidden |
+| `404` | Not Found |
+| `409` | Conflict |
+| `500` | Internal Server Error |
 
-- JWT Authentication
-- Serilog
-- RFC 7807 Problem Details
+### Deliverable
+
+Consistent validation and error responses.
