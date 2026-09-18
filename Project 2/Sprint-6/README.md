@@ -1,103 +1,191 @@
-## 🏃 Sprint 6 — Production Readiness & Deployment
+# 🏃 Sprint 6 — Advanced API Features
 
-**Weeks 11–12 · Project 2: Event Management API**
-
-### 🎯 Goal
-
-Finalize the application with production-ready features, improve scalability and deploy the API to a live environment.
+**Duration:** Weeks 11–12
 
 ---
 
-## 📚 Concepts
+## 🎯 Sprint Goal
 
-- Payment Gateways
-- Stripe
-- SignalR
-- Pagination
-- Filtering
-- FluentValidation
-- Swagger
-- API Versioning
-- Deployment
+Add a small set of practical backend features that make the API more complete without introducing unnecessary production complexity.
 
 ---
 
-## 📝 Features
+## Task 1 — Advanced Querying
 
-### 💳 Payments
+### Requirements
 
-Integrate online payments.
+Extend:
 
-- Stripe Payment Intents
-- Payment Confirmation
-- Payment Status
-- Stripe Webhooks
+```
+GET /api/v1/events
+```
 
-### 🔔 Real-time Notifications
+with:
 
-Notify users instantly.
+#### Pagination
 
-- SignalR Hub
-- User Notifications
-- Event Updates
-- Registration Confirmation
+```
+pageNumber
+pageSize
+```
 
-### 📊 Reporting
+#### Searching
 
-Generate business reports.
+- Title
+- Description
 
-- Revenue reports
-- Event statistics
-- Top events
-- Dashboard data
+#### Filtering
 
-### 🔍 API Enhancements
+- Status
+- Venue
+- Date
 
-Improve API usability.
+#### Sorting
 
-- Pagination
-- Filtering
-- Searching
-- Sorting
-- FluentValidation
+- Title
+- StartDate
+- CreatedDate
 
-### 📚 Documentation & Deployment
+Use:
 
-Prepare the application for production.
+```
+IQueryable
+```
 
-- Swagger Documentation
-- JWT Authentication in Swagger
-- API Versioning
-- IIS Deployment
-- Azure Deployment
+and apply:
 
----
+```
+Filter
+→ Search
+→ Sort
+→ Pagination
+```
 
-## ✅ Deliverable
+### Deliverable
 
-A production-ready Event Management API with payments, real-time notifications, reporting, documentation and deployment.
-
-🎉 **Project 2 Complete**
+A flexible event listing endpoint.
 
 ---
 
-## 🔗 Resource Hub
+## Task 2 — QR Check-in
 
-### 🇪🇬 Egyptian Creators
+### Requirements
 
-- Mohamed El-Zohairy
-- Code With Ahmed
+Generate a QR code for confirmed registrations.
 
-### 🇬🇧 English Creators
+Implement:
 
-- Nick Chapsas
-- Milan Jovanović
-- Tim Corey
+```
+Get Registration QR
+Check-in Registration
+```
 
-### 📄 Official Docs
+### Rules
 
-- Stripe
-- SignalR
-- Swagger
-- FluentValidation
-- ASP.NET Core Deployment
+- Cancelled registration → reject
+- Already checked-in → reject
+- Valid registration → check in
+
+### Deliverable
+
+A complete workflow:
+
+```
+Registration
+      ↓
+QR
+      ↓
+Check-in
+```
+
+---
+
+## Task 3 — Background Email
+
+### Requirements
+
+Create a simple:
+
+```
+IEmailQueue
+BackgroundService
+```
+
+Send an email when:
+
+- Registration is confirmed
+- Registration is cancelled
+
+That's it.
+
+> ❌ No RabbitMQ.
+> ❌ No Kafka.
+> ❌ No distributed messaging.
+
+### Deliverable
+
+A simple background email-processing workflow.
+
+---
+
+## Task 4 — Logging
+
+### Requirements
+
+Configure **Serilog**.
+
+Log:
+
+- HTTP Method
+- Request Path
+- Status Code
+- Execution Time
+- Exceptions
+
+And important actions:
+
+- Event Created
+- Registration Created
+- Registration Cancelled
+- Check-in Completed
+
+### Deliverable
+
+Structured application logging.
+
+---
+
+## Task 5 — Testing & Documentation
+
+
+### Testing
+
+
+#### Unit Tests
+
+- Event validation
+- Registration rules
+- Check-in rules
+
+#### Integration Tests
+
+- Login
+- Create Event
+- Register
+- Check-in
+
+### Swagger
+
+Document:
+
+- Endpoints
+- Request/Response
+- Status Codes
+- JWT Authentication
+
+### API Versioning
+
+```
+/api/v1/events
+/api/v1/registrations
+```
