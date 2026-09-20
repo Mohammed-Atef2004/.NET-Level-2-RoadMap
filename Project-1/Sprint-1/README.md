@@ -89,6 +89,7 @@ A well-structured N-Tier MVC application with secure authentication, authorizati
 
 | Source | Type | Link |
 |--------|------|------|
+| **DevCreed (محمد الهلالي)** — Repository Pattern With Unit Of Work in .Net 6 (Core) | 🇪🇬 Arabic Playlist | [Repository Pattern With Unit Of Work](https://youtube.com/playlist?list=PL62tSREI9C-e6nQ47brLj00iSGddiee73&si=nLuqqnNJJj4Qrp4K) |
 | **Mohamad Lawand** — Step-by-step Repository Pattern + Unit of Work with EF Core | 🇬🇧 Video | [Repository Pattern & Unit of Work](https://www.youtube.com/watch?v=-jcf1Qq8A-4) |
 | **Milan Jovanović** — Generic Repository & Unit of Work in .NET 7 | 🇬🇧 Video | [Generic Repository & UoW](https://www.youtube.com/watch?v=xdibesoH8zE) |
 | **Microsoft Docs** — Implementing Repository & Unit of Work in ASP.NET MVC | 📄 Docs | [Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application) |
@@ -110,7 +111,7 @@ A well-structured N-Tier MVC application with secure authentication, authorizati
 
 | Source | Type | Link |
 |--------|------|------|
-| **Mohamad Lawand** — AutoMapper + DTOs in .NET 6, full walkthrough | 🇬🇧 Video | [AutoMapper & DTOs](https://www.youtube.com/watch?v=-jcf1Qq8A-4) |
+| **Mohamad Lawand** — AutoMapper + DTOs in .NET 6, full walkthrough | 🇬🇧 Video | [AutoMapper & DTOs](https://youtu.be/Wm7hN0S-AdU?si=eXoKVTDHGpTArD9V) |
 | **Nick Chapsas** — Comparing the best .NET mappers (AutoMapper vs Mapster) | 🇬🇧 Video | [Best .NET Mapper in 2023](https://www.youtube.com/watch?v=U8gSdQN2jWI) |
 | **AutoMapper Docs** — Official getting started guide | 📄 Docs | [automapper.org](https://docs.automapper.org/en/stable/Getting-started.html) |
 
