@@ -1,174 +1,203 @@
-# 🏃 Sprint 5 — Core Event Management & Security
+# 🏃 Sprint 5 — Task Management Core
 
-**Duration:** Weeks 9–10
-
----
+**Duration:** 2 Weeks
 
 ## 🎯 Sprint Goal
 
-Build the core Event Management API on top of the Light Clean Architecture established in Sprint 4.
+Extend the existing Task Management API with relationships, business rules, authentication, authorization, and improved validation.
 
-Focus on event management, ticketing, registration, authentication, authorization, and validation.
+> The existing **Task**, **Project**, and **Comment** features from Sprint 4 must remain the foundation of the system.
 
 ---
 
-## Task 1 — Event Management
+## Task 1 — Task & Project Business Rules
 
-### Requirements
+Build on the existing entities and features.
 
-Create:
+### Implement
 
-- `Event`
-- `Venue`
-- `Speaker`
+**Project**
+- Create Project
+- Get Project
+- Get Projects
+- Update Project
+- Delete Project
 
-Implement:
+**Task**
+- Create Task
+- Get Task
+- Get Tasks
+- Update Task
+- Delete Task
 
-- Create Event
-- Get Event
-- Get Events
-- Update Event
-- Delete Event
-- Publish Event
-- Cancel Event
+**Comment**
+- Add Comment
+- Get Task Comments
+- Delete Comment
 
-### Basic Rules
+> ⚠️ Do **not** rebuild the existing endpoints. Extend them with business rules.
 
-- Start date < End date
-- Registration deadline < Start date
-- Cancelled events cannot accept registrations
-- Only the organizer can modify their event
+### Business Rules (examples)
+
+- A Task must belong to an existing Project
+- A Comment must belong to an existing Task
+- A deleted Project cannot receive new Tasks
+- A deleted Task cannot receive new Comments
+- Task title is required
+- Project name is required
+- Comment content is required
 
 ### Concepts
 
+- Domain Rules
+- Application Validation
+- Entity Relationships
+- EF Core
 - CQRS
-- MediatR
-- DTOs
-- EF Core Relationships
-- Business Validation
 
 ### Deliverable
 
-A functional Event Management module.
+A consistent **Task → Project → Comment** workflow.
 
 ---
 
-## Task 2 — Tickets & Registration
+## Task 2 — Task Status & Workflow
 
-### Requirements
+Introduce a simple Task lifecycle.
 
-Create:
+### Create `TaskStatus`
 
-**`TicketType`**
-
-- `Name`
-- `Price`
-- `Quantity`
-- `EventId`
-
-**`Registration`**
-
-- `EventId`
-- `TicketTypeId`
-- `UserId`
-- `RegisteredAt`
-- `Status`
-
-Implement:
-
+```csharp
+public enum TaskStatus
+{
+    Todo,
+    InProgress,
+    Completed,
+    Cancelled
+}
 ```
-Register
-Get My Registrations
-Get Registration
-Cancel Registration
-```
+
+### Implement
+
+- Update Task Status
 
 ### Rules
 
-- Cannot register twice for the same event
-- Cannot register after the registration deadline
-- Cannot register for a cancelled event
-- Cannot exceed ticket quantity
-- User can cancel their own registration
+**Allowed transitions (examples):**
+
+| From | To |
+|---|---|
+| Todo | InProgress |
+| InProgress | Completed |
+| Todo | Cancelled |
+| InProgress | Cancelled |
+
+**Invalid transitions must be prevented, for example:**
+
+- ❌ Completed → InProgress
+- ❌ Cancelled → Completed
 
 ### Deliverable
 
-A complete **Event → Ticket → Registration** workflow.
+A controlled Task workflow instead of treating Task as simple CRUD data.
 
 ---
 
-## Task 3 — Authentication & Authorization
+## Task 3 — Authentication
 
-### Requirements
+Add authentication to the existing Task Management API.
 
-Implement:
+### Implement
 
 - Register
 - Login
 - Refresh Token
 - Logout
 
-Roles:
+### Use
 
-```
-Admin
-Organizer
-Attendee
-```
-
-Authorization:
-
-| Role | Permissions |
-|------|-------------|
-| **Admin** | Manage system |
-| **Organizer** | Manage own events |
-| **Attendee** | Register for events |
-
-Use:
-
+- ASP.NET Core Identity
 - JWT
+- Refresh Tokens
 - Claims
-- Role-based Authorization
-- Policy-based Authorization
+
+### Create `User`
+
+Connect users to the existing system:
+
+```text
+User
+ │
+ ├── Projects
+ │
+ └── Tasks
+```
 
 ### Deliverable
 
-A secured API with authentication and authorization.
+Users can authenticate and receive JWT access tokens.
 
 ---
 
-## Task 4 — Validation & Error Handling
+## Task 4 — Authorization
 
-### Requirements
+### Introduce Roles
 
-Use **FluentValidation** for:
+| Role | Permissions |
+|---|---|
+| **Admin** | Can manage the system |
+| **User** | Can manage their own resources |
 
-- `CreateEvent`
-- `UpdateEvent`
-- `CreateTicket`
-- `RegisterForEvent`
+### Examples
 
-Use the existing Validation Pipeline.
+- User → Create Project
+- User → Modify Own Project
+- User → Create Task in Own Project
+- User → Add Comment
 
-Implement:
+> Users should **not** be able to modify another user's resources.
 
-```
-Result<T>
-ProblemDetails
-Global Exception Handling
-```
+### Use
 
-Handle:
-
-| Status Code | Meaning |
-|-------------|---------|
-| `400` | Bad Request |
-| `401` | Unauthorized |
-| `403` | Forbidden |
-| `404` | Not Found |
-| `409` | Conflict |
-| `500` | Internal Server Error |
+- Role-based Authorization
+- Policy-based Authorization where appropriate
+- Claims
 
 ### Deliverable
 
-Consistent validation and error responses.
+The existing Task Management endpoints become secured.
+
+---
+
+## Task 5 — Validation & Error Handling
+
+Extend the existing validation pipeline.
+
+### Add FluentValidation for the important commands
+
+- `CreateProject`
+- `UpdateProject`
+- `CreateTask`
+- `UpdateTask`
+- `CreateComment`
+
+### Implement consistent API errors using
+
+- `Result<T>`
+- `ProblemDetails`
+- Global Exception Handling
+
+### Handle
+
+| Status Code | Meaning |
+|---|---|
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 409 | Conflict |
+| 500 | Internal Server Error |
+
+### Deliverable
+
+The API has consistent validation and error handling.
