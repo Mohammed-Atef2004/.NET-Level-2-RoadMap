@@ -1,140 +1,146 @@
-# 🏃 Sprint 6 — Advanced API Features
+# 🏃 Sprint 6 — Task Management Advanced Features
 
-**Duration:** Weeks 11–12
-
----
+**Duration:** 2 Weeks
 
 ## 🎯 Sprint Goal
 
-Add a small set of practical backend features that make the API more complete without introducing unnecessary production complexity.
+Add practical querying, assignment, background processing, logging, and testing to the existing Task Management system.
+
+- No new business domain.
+- No unnecessary infrastructure.
 
 ---
 
-## Task 1 — Advanced Querying
-
-### Requirements
+## Task 1 — Advanced Task Querying
 
 Extend:
 
-```
-GET /api/v1/events
-```
-
-with:
-
-#### Pagination
-
-```
-pageNumber
-pageSize
+```http
+GET /api/v1/tasks
 ```
 
-#### Searching
+### Pagination
 
+- `pageNumber`
+- `pageSize`
+
+### Search
+
+Search by:
 - Title
 - Description
 
-#### Filtering
+### Filtering
 
+Filter by:
 - Status
-- Venue
-- Date
-
-#### Sorting
-
-- Title
-- StartDate
+- Project
 - CreatedDate
 
-Use:
+### Sorting
 
-```
-IQueryable
-```
+Support sorting by:
+- Title
+- CreatedDate
+- Status
 
-and apply:
+### Use `IQueryable` and apply in this order
 
-```
-Filter
-→ Search
-→ Sort
-→ Pagination
+```text
+Filter → Search → Sort → Pagination → Projection
 ```
 
 ### Deliverable
 
-A flexible event listing endpoint.
+A flexible Task listing endpoint.
 
 ---
 
-## Task 2 — QR Check-in
+## Task 2 — Task Assignment
 
-### Requirements
+Extend the existing Task entity with assignment, for example: `AssignedToUserId`.
 
-Generate a QR code for confirmed registrations.
+### Implement
 
-Implement:
-
-```
-Get Registration QR
-Check-in Registration
-```
+- Assign Task
+- Unassign Task
+- Get My Tasks
 
 ### Rules
 
-- Cancelled registration → reject
-- Already checked-in → reject
-- Valid registration → check in
+- Only authorized users can assign tasks
+- A user cannot assign a task to a non-existing user
+- Only the project owner / authorized user can modify assignment
+- Users can retrieve their assigned tasks
 
 ### Deliverable
 
-A complete workflow:
+A basic workflow:
 
+```text
+Project
+   ↓
+Task
+   ↓
+Assigned User
 ```
-Registration
-      ↓
-QR
-      ↓
-Check-in
-```
+
+> This is a natural extension of the existing Task Management domain, not a new feature domain.
 
 ---
 
-## Task 3 — Background Email
+## Task 3 — Background Task Notifications
 
-### Requirements
+Add a very simple background processing mechanism.
 
-Create a simple:
+### Create
 
-```
-IEmailQueue
+- `INotificationQueue`
+- `BackgroundService`
+
+### Use it for a small number of events
+
+- Task Assigned
+- Task Completed
+
+### Example flow
+
+```text
+Assign Task
+     ↓
+Queue Notification
+     ↓
 BackgroundService
+     ↓
+Process Notification
 ```
 
-Send an email when:
+No need for actual external email infrastructure.
 
-- Registration is confirmed
-- Registration is cancelled
+### Learning goals
 
-That's it.
+- BackgroundService
+- Queues
+- Async processing
+- Dependency Injection
 
-> ❌ No RabbitMQ.
-> ❌ No Kafka.
-> ❌ No distributed messaging.
+### Do NOT add
 
-### Deliverable
-
-A simple background email-processing workflow.
+- ❌ RabbitMQ
+- ❌ Kafka
+- ❌ MassTransit
+- ❌ Redis
+- ❌ Microservices
 
 ---
 
-## Task 4 — Logging
+## Task 4 — Structured Logging
 
-### Requirements
+### Configure
 
-Configure **Serilog**.
+- Serilog
 
-Log:
+### Log (HTTP)
 
 - HTTP Method
 - Request Path
@@ -142,50 +148,66 @@ Log:
 - Execution Time
 - Exceptions
 
-And important actions:
+### Log important business actions
 
-- Event Created
-- Registration Created
-- Registration Cancelled
-- Check-in Completed
+- Project Created
+- Task Created
+- Task Assigned
+- Task Completed
+- Comment Added
 
 ### Deliverable
 
-Structured application logging.
+Structured application logging across the existing features.
 
 ---
 
 ## Task 5 — Testing & Documentation
 
+### Unit Tests
 
-### Testing
+Focus on actual business rules.
 
+| Area | Test |
+|---|---|
+| **Task** | Valid Status Transition |
+| **Task** | Invalid Status Transition |
+| **Project** | Cannot create Task for invalid Project |
+| **Comment** | Cannot add Comment to invalid Task |
+| **Assignment** | Cannot assign to non-existing User |
 
-#### Unit Tests
+### Integration Tests
 
-- Event validation
-- Registration rules
-- Check-in rules
+Test the main workflow:
 
-#### Integration Tests
+```text
+Register
+   ↓
+Login
+   ↓
+Create Project
+   ↓
+Create Task
+   ↓
+Assign Task
+   ↓
+Complete Task
+   ↓
+Add Comment
+```
 
-- Login
-- Create Event
-- Register
-- Check-in
+> You don't need integration tests for every endpoint.
 
-### Swagger
+### Swagger & API Documentation
 
-Document:
-
+**Document:**
 - Endpoints
-- Request/Response
-- Status Codes
+- Request models
+- Response models
+- Status codes
 - JWT Authentication
 
-### API Versioning
-
-```
-/api/v1/events
-/api/v1/registrations
-```
+**Routes:**
+- `/api/v1/projects`
+- `/api/v1/tasks`
+- `/api/v1/comments`
