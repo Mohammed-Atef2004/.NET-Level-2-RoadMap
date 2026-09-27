@@ -1,0 +1,1635 @@
+# 🚀 .NET Backend Engineering — Level 2
+
+## 3-Month Advanced Backend Mentorship Program
+
+**Duration:** 12 Weeks
+**Sprints:** 6
+**Sprint Duration:** 2 Weeks
+**Project Type:** Production-style Modular Monolith REST API
+**Target:** Junior → Advanced Junior / Strong Junior Backend Developer
+
+---
+
+# 🎯 Program Goal
+
+The goal of this program is to move trainees beyond CRUD development and expose them to the engineering practices used when building real backend applications.
+
+By the end of the program, trainees should be able to:
+
+* Design a structured ASP.NET Core Web API.
+* Apply Clean Architecture appropriately.
+* Model real business rules instead of building CRUD-only endpoints.
+* Use CQRS and MediatR for application workflows.
+* Build secure APIs using JWT, Refresh Tokens, Claims and Policies.
+* Write efficient EF Core queries.
+* Handle validation, errors, transactions and concurrency.
+* Implement pagination, filtering, searching and sorting.
+* Apply caching where appropriate.
+* Build background processing.
+* Integrate external services.
+* Write meaningful Unit and Integration Tests.
+* Containerize the application using Docker.
+* Build a basic CI pipeline using GitHub Actions.
+* Deploy a real backend application.
+* Understand the trade-offs behind architectural decisions.
+
+> **The goal is not to teach as many patterns as possible.**
+>
+> The goal is to teach trainees how to make good backend engineering decisions.
+
+---
+
+# 🏗️ Main Project — TeamFlow
+
+## Project Description
+
+**TeamFlow** is a project and task management platform for teams.
+
+Users can create projects, manage project members, create and assign tasks, track task progress, communicate through comments, receive notifications, and monitor project activity.
+
+The system grows gradually throughout the six sprints.
+
+---
+
+# 🧩 Core Domain
+
+```text
+User
+ │
+ ├── Projects
+ │      │
+ │      ├── Members
+ │      │
+ │      └── Tasks
+ │             │
+ │             ├── Assigned User
+ │             └── Comments
+ │
+ └── Notifications
+```
+
+Additional supporting concepts:
+
+* Project Membership
+* Task Status
+* Task Priority
+* Comments
+* Notifications
+* Activity/Audit Records
+
+---
+
+# 🏛️ Target Architecture
+
+```text
+TeamFlow
+│
+├── Domain
+│   ├── Entities
+│   ├── ValueObjects
+│   ├── Enums
+│   ├── Domain Rules
+│   └── Domain Events
+│
+├── Application
+│   ├── Features
+│   ├── Commands
+│   ├── Queries
+│   ├── DTOs
+│   ├── Validators
+│   ├── Behaviors
+│   └── Abstractions
+│
+├── Infrastructure
+│   ├── Persistence
+│   ├── Identity
+│   ├── External Services
+│   └── Background Processing
+│
+└── API
+    ├── Controllers / Endpoints
+    ├── Middleware
+    ├── Authentication
+    └── Configuration
+```
+
+The architecture should evolve with the project instead of being created as empty folders from day one.
+
+---
+
+# 🟦 Sprint 1 — Backend Foundations & Clean Architecture
+
+**Weeks 1–2**
+
+## 🎯 Sprint Goal
+
+Build the foundation of TeamFlow and teach trainees how a real ASP.NET Core backend is structured.
+
+---
+
+## 📚 Topics to Study
+
+### ASP.NET Core
+
+* ASP.NET Core Web API
+* HTTP Request Pipeline
+* Middleware
+* Dependency Injection
+* Configuration
+* Options Pattern
+* Environment-based configuration
+* Logging fundamentals
+* Controllers
+* Model Binding
+* Routing
+* Action Results
+* HTTP Status Codes
+
+### REST API Design
+
+* Resource-oriented API design
+* HTTP Methods
+* Status Codes
+* DTOs
+* Request/Response Models
+* API naming conventions
+* Basic API versioning concepts
+
+### EF Core
+
+* DbContext
+* DbSet
+* Entity relationships
+* Fluent API
+* Migrations
+* Tracking vs NoTracking
+* Loading related data
+* IQueryable
+* Projection
+* Transactions fundamentals
+
+### Architecture
+
+* Separation of Concerns
+* Dependency Inversion
+* Clean Architecture
+* Project dependencies
+* Domain vs Application vs Infrastructure
+* Feature-based organization
+
+---
+
+# 📝 Sprint 1 Tasks
+
+## Task 1 — Create the Solution Architecture
+
+Create the initial solution:
+
+```text
+TeamFlow.Domain
+TeamFlow.Application
+TeamFlow.Infrastructure
+TeamFlow.API
+```
+
+Configure project references so that:
+
+```text
+API → Application
+API → Infrastructure
+
+Infrastructure → Application
+Infrastructure → Domain
+
+Application → Domain
+
+Domain → Nothing
+```
+
+### Requirements
+
+* Domain must not reference Infrastructure.
+* Domain must not reference ASP.NET Core.
+* Application must not depend on EF Core implementation details.
+* Infrastructure contains persistence and external implementations.
+* API contains HTTP-specific concerns.
+
+### Deliverable
+
+A compiling Clean Architecture solution with correct dependency direction.
+
+---
+
+## Task 2 — Project Management
+
+Implement:
+
+```http
+POST   /api/v1/projects
+GET    /api/v1/projects
+GET    /api/v1/projects/{id}
+PUT    /api/v1/projects/{id}
+DELETE /api/v1/projects/{id}
+```
+
+### Project contains
+
+* Id
+* Name
+* Description
+* CreatedAt
+* UpdatedAt
+
+### Requirements
+
+* DTOs instead of exposing entities.
+* EF Core persistence.
+* Fluent API configuration.
+* Proper HTTP status codes.
+* Basic validation.
+
+---
+
+## Task 3 — Task Management
+
+Implement:
+
+```http
+POST   /api/v1/tasks
+GET    /api/v1/tasks/{id}
+PUT    /api/v1/tasks/{id}
+DELETE /api/v1/tasks/{id}
+```
+
+A Task must belong to an existing Project.
+
+### Requirements
+
+* Project relationship.
+* Foreign key.
+* Navigation properties.
+* Validation.
+* Proper NotFound handling.
+
+---
+
+## Task 4 — Comments
+
+Implement:
+
+```http
+POST /api/v1/tasks/{taskId}/comments
+GET  /api/v1/tasks/{taskId}/comments
+DELETE /api/v1/comments/{id}
+```
+
+A Comment must belong to an existing Task.
+
+---
+
+## Task 5 — API Documentation
+
+Configure Swagger/OpenAPI.
+
+Document:
+
+* Endpoints
+* Request models
+* Response models
+* Status codes
+
+---
+
+## ✅ Sprint 1 Deliverable
+
+A working Web API with:
+
+* Clean Architecture
+* EF Core
+* Projects
+* Tasks
+* Comments
+* DTOs
+* Validation
+* Swagger
+* Correct dependency direction
+
+---
+
+# 🟩 Sprint 2 — CQRS, MediatR & Application Design
+
+**Weeks 3–4**
+
+## 🎯 Sprint Goal
+
+Move from CRUD-oriented services toward structured application use cases.
+
+---
+
+## 📚 Topics to Study
+
+### CQRS
+
+* What is CQRS?
+* Command vs Query
+* Why separate reads and writes?
+* CQRS trade-offs
+* When CQRS is unnecessary
+
+### MediatR
+
+* IRequest
+* IRequestHandler
+* IMediator
+* Commands
+* Queries
+* Handlers
+* Notifications
+
+### Pipeline Behaviors
+
+* Validation Behavior
+* Logging Behavior
+* Request pipeline
+* Cross-cutting concerns
+
+### Validation
+
+* FluentValidation
+* Rule composition
+* Business validation
+* Validation vs domain rules
+
+### Result Pattern
+
+* Success
+* Failure
+* Error codes
+* Mapping failures to HTTP responses
+
+### Async Programming
+
+* async/await
+* Task
+* CancellationToken
+* Cancellation propagation
+
+---
+
+# 📝 Sprint 2 Tasks
+
+## Task 1 — Convert Project Features to CQRS
+
+Create:
+
+```text
+CreateProjectCommand
+UpdateProjectCommand
+DeleteProjectCommand
+
+GetProjectQuery
+GetProjectsQuery
+```
+
+Each operation must have its own Handler.
+
+---
+
+## Task 2 — Convert Task Features to CQRS
+
+Create:
+
+```text
+CreateTaskCommand
+UpdateTaskCommand
+DeleteTaskCommand
+
+GetTaskQuery
+GetTasksQuery
+```
+
+---
+
+## Task 3 — Convert Comments
+
+Create:
+
+```text
+CreateCommentCommand
+DeleteCommentCommand
+
+GetTaskCommentsQuery
+```
+
+---
+
+## Task 4 — Validation Pipeline
+
+Create a global FluentValidation behavior.
+
+Example:
+
+```text
+HTTP Request
+     ↓
+MediatR
+     ↓
+Validation Behavior
+     ↓
+Handler
+```
+
+Invalid requests should never reach the Handler.
+
+---
+
+## Task 5 — Result Pattern
+
+Introduce a consistent application result:
+
+```text
+Success
+Failure
+NotFound
+Conflict
+ValidationError
+```
+
+Map application failures to appropriate HTTP responses.
+
+---
+
+## Task 6 — Cancellation
+
+Propagate `CancellationToken` through:
+
+```text
+Controller
+ ↓
+MediatR
+ ↓
+Handler
+ ↓
+EF Core
+```
+
+---
+
+## Task 7 — Logging Behavior
+
+Create a MediatR behavior that logs:
+
+* Request name
+* Execution time
+* Success/failure
+
+Do not log sensitive information.
+
+---
+
+## ✅ Sprint 2 Deliverable
+
+The application now follows:
+
+```text
+Request
+ ↓
+MediatR
+ ↓
+Pipeline Behaviors
+ ↓
+Handler
+ ↓
+Domain
+ ↓
+Infrastructure
+```
+
+CRUD has been transformed into structured application use cases.
+
+---
+
+# 🟨 Sprint 3 — Security & Business Domain
+
+**Weeks 5–6**
+
+## 🎯 Sprint Goal
+
+Turn TeamFlow from a public CRUD API into a real multi-user application.
+
+---
+
+## 📚 Topics to Study
+
+### Authentication
+
+* ASP.NET Core Identity
+* JWT
+* Access Tokens
+* Refresh Tokens
+* Claims
+* Password security
+* Token expiration
+* Token rotation concepts
+* Logout / token revocation
+
+### Authorization
+
+* Authentication vs Authorization
+* Role-based Authorization
+* Claims-based Authorization
+* Policy-based Authorization
+* Resource-based authorization
+
+### Domain Modeling
+
+* Entities
+* Invariants
+* Domain Rules
+* Encapsulation
+* Entity methods
+* Valid state transitions
+
+---
+
+# 📝 Sprint 3 Tasks
+
+## Task 1 — Authentication
+
+Implement:
+
+```http
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+POST /api/v1/auth/refresh
+POST /api/v1/auth/logout
+```
+
+Use:
+
+* ASP.NET Core Identity
+* JWT
+* Refresh Tokens
+* Claims
+
+---
+
+## Task 2 — Project Ownership
+
+A Project must have an owner.
+
+Implement:
+
+```text
+User
+ ↓
+Owned Projects
+```
+
+A user should only be able to manage projects they own or are authorized to manage.
+
+---
+
+## Task 3 — Project Membership
+
+Introduce:
+
+```text
+ProjectMember
+```
+
+Support:
+
+```http
+POST   /projects/{id}/members
+DELETE /projects/{id}/members/{userId}
+GET    /projects/{id}/members
+```
+
+Rules:
+
+* Only authorized users can manage members.
+* A user cannot be added twice.
+* Only existing users can become members.
+* Unauthorized users cannot access private project data.
+
+---
+
+## Task 4 — Task Assignment
+
+Extend Task:
+
+```text
+AssignedToUserId
+```
+
+Implement:
+
+```http
+POST   /tasks/{id}/assign
+DELETE /tasks/{id}/assign
+GET    /tasks/my
+```
+
+Rules:
+
+* Assigned user must exist.
+* Assigned user must be a project member.
+* Only authorized users can assign tasks.
+
+---
+
+## Task 5 — Task Workflow
+
+Introduce:
+
+```csharp
+public enum TaskStatus
+{
+    Todo,
+    InProgress,
+    Completed,
+    Cancelled
+}
+```
+
+Implement:
+
+```http
+PATCH /api/v1/tasks/{id}/status
+```
+
+Valid transitions:
+
+```text
+Todo → InProgress
+Todo → Cancelled
+
+InProgress → Completed
+InProgress → Cancelled
+```
+
+Invalid transitions must be rejected.
+
+The Entity should protect its own invariants.
+
+---
+
+## Task 6 — Authorization Policies
+
+Create policies such as:
+
+```text
+CanManageProject
+CanManageTask
+CanManageMembers
+```
+
+Authorization must consider the actual resource, not only the user's role.
+
+---
+
+## ✅ Sprint 3 Deliverable
+
+TeamFlow now has:
+
+* Registration
+* Login
+* JWT
+* Refresh Tokens
+* Roles
+* Claims
+* Policies
+* Project ownership
+* Project membership
+* Task assignment
+* Task workflow
+* Real business rules
+
+---
+
+# 🟧 Sprint 4 — Advanced Data Access & Performance
+
+**Weeks 7–8**
+
+## 🎯 Sprint Goal
+
+Teach trainees that a backend is not successful merely because its endpoints work.
+
+The API must also retrieve and process data efficiently.
+
+---
+
+## 📚 Topics to Study
+
+### EF Core Deep Dive
+
+* IQueryable
+* Deferred execution
+* Expression Trees
+* Projection
+* Select
+* Tracking vs NoTracking
+* Include
+* Split Queries
+* N+1 Problem
+* Query composition
+* Transactions
+* Concurrency
+* Optimistic concurrency
+
+### API Querying
+
+* Pagination
+* Filtering
+* Searching
+* Sorting
+* Dynamic query composition
+
+### Performance
+
+* Database round trips
+* Query efficiency
+* Projection
+* Indexing fundamentals
+* Avoiding unnecessary data loading
+
+### Caching
+
+* Cache-aside pattern
+* IMemoryCache
+* Cache keys
+* Expiration
+* Cache invalidation
+* Cache consistency
+
+---
+
+# 📝 Sprint 4 Tasks
+
+## Task 1 — Advanced Task Listing
+
+Extend:
+
+```http
+GET /api/v1/tasks
+```
+
+Support:
+
+```text
+pageNumber
+pageSize
+search
+status
+priority
+projectId
+assignedTo
+createdFrom
+createdTo
+sortBy
+sortDirection
+```
+
+---
+
+## Task 2 — Query Pipeline
+
+Apply querying in this order:
+
+```text
+Filter
+ ↓
+Search
+ ↓
+Sort
+ ↓
+Pagination
+ ↓
+Projection
+```
+
+The query must remain `IQueryable` until the database query is ready.
+
+---
+
+## Task 3 — Task Summary
+
+Create:
+
+```http
+GET /api/v1/projects/{id}/summary
+```
+
+Return:
+
+* Total Tasks
+* Completed Tasks
+* InProgress Tasks
+* Todo Tasks
+* Cancelled Tasks
+* Completion Percentage
+
+The query should be calculated efficiently at database level.
+
+---
+
+## Task 4 — EF Core Performance Investigation
+
+Create intentionally inefficient queries and investigate:
+
+* Generated SQL
+* Unnecessary `Include`
+* N+1 queries
+* Tracking overhead
+* Over-fetching
+
+Then optimize them.
+
+---
+
+## Task 5 — Concurrency
+
+Add optimistic concurrency to an important entity.
+
+Simulate:
+
+```text
+User A reads Project
+User B updates Project
+User A attempts update
+```
+
+Handle the concurrency conflict correctly.
+
+---
+
+## Task 6 — Caching
+
+Cache project statistics or another read-heavy resource using:
+
+```text
+IMemoryCache
+```
+
+Implement:
+
+```text
+Read
+ ↓
+Cache?
+ ├── Yes → Return
+ └── No
+       ↓
+     Database
+       ↓
+     Cache
+```
+
+Invalidate the cache after relevant changes.
+
+---
+
+## ✅ Sprint 4 Deliverable
+
+A backend with:
+
+* Advanced querying
+* Efficient EF Core usage
+* Pagination
+* Filtering
+* Searching
+* Sorting
+* Projection
+* Concurrency handling
+* Caching
+* Performance awareness
+
+---
+
+# 🟥 Sprint 5 — Production Engineering
+
+**Weeks 9–10**
+
+## 🎯 Sprint Goal
+
+Introduce the concerns that appear when a backend becomes a real running system.
+
+---
+
+## 📚 Topics to Study
+
+### Error Handling
+
+* Exception Middleware
+* ProblemDetails
+* Error contracts
+* Global exception handling
+* Correlation IDs
+
+### Logging
+
+* Structured Logging
+* Serilog
+* Log Levels
+* Request Logging
+* Business Event Logging
+* Sensitive data protection
+
+### Background Processing
+
+* BackgroundService
+* Hosted Services
+* Producer/Consumer concepts
+* In-memory queues
+* Async processing
+* Graceful shutdown
+
+### External Services
+
+* HttpClientFactory
+* Typed HttpClient
+* Timeouts
+* Cancellation
+* External service failures
+
+### Resilience
+
+* Retry
+* Timeout
+* Circuit Breaker
+* Failure handling
+* Idempotency concepts
+
+---
+
+# 📝 Sprint 5 Tasks
+
+## Task 1 — Global Exception Handling
+
+Implement centralized exception handling.
+
+All unexpected exceptions should produce a consistent:
+
+```text
+ProblemDetails
+```
+
+Do not expose:
+
+* Stack traces
+* Database details
+* Internal implementation details
+
+---
+
+## Task 2 — Correlation ID
+
+Every request should have a correlation identifier.
+
+Use it in logs so a request can be traced through the application.
+
+Example:
+
+```text
+Request
+ ↓
+CorrelationId
+ ↓
+Application
+ ↓
+Database
+ ↓
+Logs
+```
+
+---
+
+## Task 3 — Structured Logging
+
+Configure Serilog.
+
+Log:
+
+* HTTP Method
+* Path
+* Status Code
+* Execution Time
+* Correlation ID
+* Exceptions
+
+Log important business actions:
+
+```text
+ProjectCreated
+TaskCreated
+TaskAssigned
+TaskCompleted
+CommentAdded
+```
+
+---
+
+## Task 4 — Notification Queue
+
+Create:
+
+```text
+INotificationQueue
+```
+
+Implement an in-memory queue using:
+
+```text
+Channel<T>
+```
+
+Flow:
+
+```text
+Task Assigned
+      ↓
+Queue Notification
+      ↓
+BackgroundService
+      ↓
+Process Notification
+```
+
+---
+
+## Task 5 — Notification Scenarios
+
+Trigger background notifications for:
+
+* Task Assigned
+* Task Completed
+* User Added to Project
+
+No external email system is required.
+
+The purpose is learning asynchronous background processing.
+
+---
+
+## Task 6 — External Service
+
+Create a small external-service integration.
+
+Examples:
+
+```text
+Notification Provider
+Weather Provider
+Exchange Rate Provider
+```
+
+The important part is not the service itself.
+
+The trainee must learn:
+
+* HttpClientFactory
+* Timeout
+* CancellationToken
+* Failure handling
+* Dependency abstraction
+
+---
+
+## Task 7 — Resilience
+
+Handle external service failures.
+
+Example:
+
+```text
+External Service
+       ↓
+     Timeout
+       ↓
+   Controlled Failure
+       ↓
+     API continues
+```
+
+Introduce retry/circuit-breaker concepts without turning the project into a distributed-systems project.
+
+---
+
+## 🚫 Explicitly Do NOT Add
+
+* RabbitMQ
+* Kafka
+* MassTransit
+* Microservices
+* Kubernetes
+* Redis Cluster
+* Event Sourcing
+
+These are outside the scope of this program.
+
+---
+
+## ✅ Sprint 5 Deliverable
+
+TeamFlow now behaves more like a production backend:
+
+* Centralized errors
+* ProblemDetails
+* Correlation IDs
+* Structured logging
+* Background processing
+* Queued notifications
+* External API integration
+* Timeout handling
+* Resilience fundamentals
+
+---
+
+# 🟪 Sprint 6 — Testing, Docker, CI/CD & Deployment
+
+**Weeks 11–12**
+
+## 🎯 Sprint Goal
+
+Take the application from "works on my machine" to a tested and deployable backend.
+
+---
+
+# 📚 Topics to Study
+
+### Testing
+
+* Unit Testing
+* Integration Testing
+* Test Doubles
+* Mocking
+* WebApplicationFactory
+* Test Database
+* Arrange / Act / Assert
+* Testing business rules
+
+### Docker
+
+* Docker fundamentals
+* Images
+* Containers
+* Dockerfile
+* Environment Variables
+* Docker Compose
+* Container networking
+
+### CI/CD
+
+* GitHub Actions
+* Build pipeline
+* Test pipeline
+* Artifact generation
+* Docker image build
+
+### Deployment
+
+* Production configuration
+* Secrets
+* Environment variables
+* Database migrations
+* Health Checks
+* Basic monitoring
+
+---
+
+# 📝 Sprint 6 Tasks
+
+## Task 1 — Unit Tests
+
+Test actual business logic.
+
+Required scenarios:
+
+### Task Workflow
+
+```text
+Todo → InProgress       ✓
+InProgress → Completed  ✓
+Todo → Completed        ✗
+Completed → InProgress  ✗
+Cancelled → Completed   ✗
+```
+
+### Assignment
+
+```text
+Existing user           ✓
+Non-existing user       ✗
+Non-member user         ✗
+```
+
+### Project Rules
+
+```text
+Valid project           ✓
+Deleted project         ✗
+Unauthorized owner      ✗
+```
+
+---
+
+## Task 2 — Integration Tests
+
+Test the complete workflow:
+
+```text
+Register
+ ↓
+Login
+ ↓
+Create Project
+ ↓
+Add Member
+ ↓
+Create Task
+ ↓
+Assign Task
+ ↓
+Update Status
+ ↓
+Add Comment
+```
+
+Do not test every endpoint.
+
+Focus on important business workflows.
+
+---
+
+## Task 3 — API Security Tests
+
+Test:
+
+```text
+Anonymous request
+Authenticated request
+Unauthorized user
+Authorized member
+Project owner
+Admin
+```
+
+Verify:
+
+```text
+401 Unauthorized
+403 Forbidden
+```
+
+are returned correctly.
+
+---
+
+## Task 4 — Dockerize the Application
+
+Create:
+
+```text
+Dockerfile
+docker-compose.yml
+```
+
+Run:
+
+```text
+TeamFlow API
+     +
+SQL Server
+```
+
+The application must not depend on Visual Studio to run.
+
+---
+
+## Task 5 — Configuration
+
+Separate:
+
+```text
+Development
+Testing
+Production
+```
+
+Use:
+
+* Environment variables
+* Configuration files
+* Secrets
+
+Never commit:
+
+* JWT secrets
+* Database passwords
+* API keys
+
+---
+
+## Task 6 — Health Checks
+
+Implement:
+
+```http
+GET /health
+```
+
+Check basic application availability and database connectivity.
+
+---
+
+## Task 7 — GitHub Actions
+
+Create CI:
+
+```text
+Push / Pull Request
+        ↓
+Restore
+        ↓
+Build
+        ↓
+Run Tests
+        ↓
+Build Docker Image
+```
+
+A Pull Request should fail if tests fail.
+
+---
+
+## Task 8 — Deployment
+
+Deploy TeamFlow to a real environment.
+
+Minimum requirements:
+
+* Public API URL
+* Database
+* Production configuration
+* HTTPS
+* Environment variables
+* Database migration
+* Swagger/OpenAPI
+
+---
+
+# 🎓 Final Project Requirements
+
+By the end of Sprint 6, TeamFlow should contain:
+
+## Architecture
+
+* Clean Architecture
+* Feature-based organization
+* Dependency Injection
+* Separation of Concerns
+* Dependency Inversion
+
+## Application Design
+
+* CQRS
+* MediatR
+* Pipeline Behaviors
+* FluentValidation
+* Result Pattern
+* Domain Rules
+
+## Security
+
+* ASP.NET Core Identity
+* JWT
+* Refresh Tokens
+* Claims
+* Roles
+* Policies
+* Resource Authorization
+
+## Data
+
+* EF Core
+* Fluent API
+* Relationships
+* Transactions
+* Optimistic Concurrency
+* Efficient Queries
+* Projection
+
+## Querying
+
+* Pagination
+* Searching
+* Filtering
+* Sorting
+
+## Performance
+
+* NoTracking
+* Avoiding N+1
+* Query optimization
+* IMemoryCache
+* Cache invalidation
+
+## Production
+
+* Global Exception Handling
+* ProblemDetails
+* Structured Logging
+* Correlation IDs
+* BackgroundService
+* In-memory Queue
+* HttpClientFactory
+* Timeout
+* Retry
+* Circuit Breaker concepts
+* Health Checks
+
+## Testing
+
+* Unit Tests
+* Integration Tests
+* Business Rule Tests
+* Authentication/Authorization Tests
+
+## DevOps
+
+* Docker
+* Docker Compose
+* GitHub Actions
+* CI
+* Production Configuration
+* Deployment
+
+---
+
+# 🏁 Final Engineering Challenge
+
+At the end of the program, trainees should not simply submit the finished application.
+
+Each trainee should present:
+
+## 1. Architecture Decision
+
+Explain:
+
+* Why Clean Architecture?
+* Why CQRS?
+* Why MediatR?
+* Why not use Repository everywhere?
+* Where does business logic live?
+* What would change if the project became 10× larger?
+
+## 2. Performance Decision
+
+Explain:
+
+* How the Task query works.
+* Why `IQueryable` is used.
+* Where projection happens.
+* How N+1 was avoided.
+* What is cached and why.
+
+## 3. Security Decision
+
+Explain:
+
+* Authentication vs Authorization.
+* JWT vs Refresh Token.
+* Role vs Policy.
+* How resource ownership is enforced.
+
+## 4. Production Decision
+
+Explain:
+
+* How exceptions are handled.
+* How requests are traced.
+* How background work is processed.
+* What happens when an external service fails.
+
+## 5. Testing Decision
+
+Explain:
+
+* What is unit tested.
+* What is integration tested.
+* Why not test every endpoint.
+
+## 6. Deployment
+
+Demonstrate:
+
+```text
+GitHub
+   ↓
+Pull Request
+   ↓
+CI
+   ↓
+Build
+   ↓
+Tests
+   ↓
+Docker
+   ↓
+Deployment
+   ↓
+Live API
+```
+
+---
+
+# 📊 Definition of "Advanced Level"
+
+A trainee should NOT graduate simply because:
+
+> "All endpoints work."
+
+They graduate when they can explain and defend their engineering decisions.
+
+### CRUD Developer
+
+```text
+Entity
+ ↓
+Controller
+ ↓
+DbContext
+ ↓
+Database
+```
+
+### Level 2 Backend Developer
+
+```text
+HTTP
+ ↓
+API
+ ↓
+Application Use Case
+ ↓
+Validation
+ ↓
+Business Rules
+ ↓
+Domain
+ ↓
+Persistence
+ ↓
+Database
+
+        +
+
+Security
+        +
+Performance
+        +
+Testing
+        +
+Logging
+        +
+Background Processing
+        +
+Deployment
+```
+
+---
+
+# 🎯 Final Outcome
+
+After 3 months, trainees should leave with **one substantial backend project** rather than several small CRUD projects.
+
+The project should demonstrate that they have experienced the complete lifecycle of a modern .NET backend:
+
+```text
+Design
+ ↓
+Architecture
+ ↓
+Implementation
+ ↓
+Business Rules
+ ↓
+Security
+ ↓
+Performance
+ ↓
+Background Processing
+ ↓
+Testing
+ ↓
+Containerization
+ ↓
+CI
+ ↓
+Deployment
+```
+
+The objective is not to make trainees experts in every technology.
+
+The objective is to make them **strong backend developers who understand what happens beyond CRUD.**
