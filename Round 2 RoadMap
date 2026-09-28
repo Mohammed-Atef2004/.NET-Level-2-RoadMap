@@ -1,99 +1,113 @@
 # Tawjeh Level 2 — Advanced .NET Backend
 
-## Real-World Backend Project Roadmap
+## Real-World Backend Engineering — 3-Month Project Roadmap
 
 **Duration:** 3 Months
 **Structure:** 6 Sprints × 2 Weeks
 **Expected Commitment:** ~15 Hours/Week
 **Total:** ~180 Hours
-**Project Type:** Production-Style Modular Monolith REST API
-**Primary Focus:** Advanced .NET Backend Engineering, Architecture, Business Logic, Data Access, Security, Performance, Production Practices
+**Project:** TeamFlow — Project & Team Operations Platform
+**Architecture:** Modular Monolith / Clean Architecture
+**Primary Stack:** ASP.NET Core, EF Core, SQL Server, MediatR, FluentValidation, Redis, Docker
 
 ---
 
-# 🎯 Level Goal
+# 🎯 Level Objective
 
-The goal of Level 2 is to move the learner beyond building CRUD APIs and introduce the mindset required to build a **real-world backend system**.
+Level 2 is designed to move learners from building **CRUD applications** to building and reasoning about a **real-world backend system**.
 
-By the end of the level, the learner should be able to:
+The learner will progressively take the same project through:
 
-* Design a maintainable backend architecture.
-* Model a non-trivial business domain.
-* Build APIs around real use cases rather than database tables.
-* Apply Clean Architecture appropriately.
-* Use CQRS and MediatR where they provide value.
-* Implement authentication and authorization.
-* Build meaningful business rules and domain behavior.
-* Design efficient EF Core queries.
-* Handle pagination, filtering, searching, sorting, and concurrency.
-* Understand and improve backend performance.
-* Implement caching when appropriate.
-* Build background processing and scheduled operations.
-* Integrate external services.
-* Implement structured logging and production-oriented error handling.
-* Integrate an external AI service into a backend system.
-* Write meaningful Unit Tests.
-* Containerize the application with Docker.
-* Deploy the backend.
-* Explain the architectural and engineering decisions made throughout the project.
+```text
+Requirements
+    ↓
+Domain Modeling
+    ↓
+Architecture
+    ↓
+Application Use Cases
+    ↓
+Security
+    ↓
+Business Rules
+    ↓
+API Engineering
+    ↓
+Data Access
+    ↓
+Performance
+    ↓
+Background Processing
+    ↓
+External Integrations
+    ↓
+Unit Testing
+    ↓
+Docker
+    ↓
+Deployment
+```
 
-The learner is not expected to memorize technologies.
+The goal is not to introduce as many technologies as possible.
 
-The objective is to understand **why a particular solution is needed, how it works, and when it should or should not be used.**
+The goal is to build **one strong system** while developing the engineering judgment required to make appropriate technical decisions.
 
 ---
 
 # 🏗️ Main Project
 
-## Project: TeamFlow — Project & Team Operations Platform
+## TeamFlow — Project & Team Operations Platform
 
-TeamFlow is a backend platform for organizations to manage:
+TeamFlow is a backend platform that helps organizations manage teams and projects.
 
-* Organizations
-* Teams
-* Projects
-* Project Members
-* Tasks
-* Task Assignments
-* Task Dependencies
-* Sprints
-* Labels
-* Comments
-* Time Tracking
-* Notifications
-* Activity History
-* Search and Reporting
-* AI-assisted project operations
+The system allows users to:
 
-The project should evolve throughout the six sprints.
+* Create and manage organizations
+* Create teams
+* Manage team members
+* Create projects
+* Manage project members
+* Create and assign tasks
+* Track task progress
+* Organize tasks into sprints
+* Add labels and comments
+* Define task dependencies
+* Track work time
+* Receive notifications
+* Search and analyze project data
+* Use an AI assistant to understand project information
 
-The learner should **not** build six disconnected mini-projects.
+The project grows throughout all six sprints.
 
-Every sprint extends and improves the same system.
+> **Important:** The learner does not build six separate projects. Every sprint extends, refactors, or improves the same TeamFlow system.
 
 ---
 
 # 🧩 Core Domain
 
-## Organization
+The main domain contains:
 
-An organization contains multiple teams and projects.
+### Organization
 
-## Team
+The top-level business boundary containing teams and projects.
 
-A team belongs to an organization and contains users with different responsibilities.
+### Team
 
-## Project
+A group of users belonging to an organization.
 
-A project belongs to an organization and contains members, tasks, sprints, and activity.
+### Project
 
-## Project Member
+A project owned by an organization and managed by project members.
 
-A user can participate in a project with a specific role.
+### Project Member
 
-## Task
+A user participating in a project with a specific role.
 
-A task belongs to a project and can contain:
+### Task
+
+A unit of work belonging to a project.
+
+A task may have:
 
 * Title
 * Description
@@ -103,109 +117,65 @@ A task belongs to a project and can contain:
 * Assignee
 * Due Date
 * Labels
-* Comments
 * Dependencies
+* Comments
 * Time Entries
 
-## Task Status
+### Sprint
 
-Example:
+A time-boxed period containing project tasks.
 
-```text
-Todo
-InProgress
-Blocked
-Completed
-Cancelled
-```
+### Task Dependency
 
-## Sprint
+A relationship describing that one task depends on another task.
 
-A project can contain multiple sprints.
+### Comment
 
-Each sprint has:
+A discussion attached to a task.
 
-* Name
-* Start Date
-* End Date
-* Tasks
+### Time Entry
 
-## Task Dependency
+A record of time spent working on a task.
 
-A task may depend on another task.
+### Notification
 
-Example:
+A message generated by important system events.
 
-```text
-Implement Authentication
-        ↓
-Implement Authorization
-        ↓
-Implement Project Permissions
-```
+### Activity
 
-## Comment
-
-Users can comment on tasks.
-
-## Time Entry
-
-Users can record the amount of time spent working on tasks.
-
-## Notification
-
-The system can notify users about important events.
-
-Examples:
-
-* Task assigned
-* Task completed
-* Comment added
-* Deadline approaching
-
-## Activity
-
-The system records important project actions.
-
-Examples:
-
-```text
-User assigned Task #15 to Ahmed
-User changed Task #15 status to Completed
-User added Mohamed to Project X
-```
+A record of important actions performed inside the system.
 
 ---
 
 # 🏛️ Target Architecture
 
-The project should gradually evolve toward:
+The architecture evolves during the project.
 
 ```text
                     HTTP Request
                          │
                          ▼
-                      API
+                    API Layer
                          │
                          ▼
-                 Application Layer
+                Application Layer
                          │
-              ┌──────────┴──────────┐
-              ▼                     ▼
-          Use Cases             Validation
-              │
-              ▼
-            Domain
-              │
-              ▼
-        Infrastructure
-              │
-       ┌──────┴───────┐
-       ▼              ▼
-   SQL Server      External Services
+                ┌────────┴────────┐
+                ▼                 ▼
+             Use Cases        Validation
+                │
+                ▼
+              Domain
+                │
+                ▼
+          Infrastructure
+                │
+        ┌───────┴────────┐
+        ▼                ▼
+    SQL Server      External Services
 ```
 
-Suggested solution structure:
+Suggested solution:
 
 ```text
 TeamFlow.sln
@@ -220,113 +190,103 @@ tests/
 └── TeamFlow.UnitTests
 ```
 
-The architecture should evolve as the project grows rather than being created as empty projects on Day 1.
+The architecture should not become an exercise in creating folders.
+
+Every architectural decision must solve an actual problem in the project.
 
 ---
 
-# 📅 Sprint 1 — Architecture & Domain Foundation
+# ⏱️ Sprint Workload Model
 
-## Duration
+Each Sprint represents approximately:
 
-2 Weeks
+**2 weeks × 15 hours = ~30 hours**
 
-## Main Goal
+A typical Sprint may contain:
 
-Build the foundation of the system and learn how to move from **requirements → domain model → architecture → database model → API**.
+```text
+Learning & Study       ~7–9 hours
+Project Implementation ~15–17 hours
+Debugging / Review     ~4–6 hours
+```
+
+These are guidelines, not rigid requirements.
+
+The exact allocation depends on the learner's progress.
+
+---
+
+# 📅 SPRINT 1
+
+# Architecture & Domain Foundation
+
+## Sprint Objective
+
+Build the foundation of TeamFlow and teach the learner how to move from:
+
+```text
+Requirements
+    ↓
+Domain Model
+    ↓
+Architecture
+    ↓
+Database Model
+    ↓
+Backend API
+```
+
+The focus is **not advanced patterns**.
+
+The focus is understanding what the system actually represents.
 
 ---
 
 # 📚 Topics
 
-## 1. Requirements & Domain Analysis
-
-Understand:
-
-* Functional requirements
-* Business requirements
-* Use cases
-* Actors
-* Entities
-* Relationships
-* Business rules
-* Identifying important domain concepts
-
-Practice converting requirements into backend use cases.
-
----
-
-## 2. Domain Modeling
+## Objective 1 — Understand the Domain
 
 Learn:
 
-* Entity
-* Value Object
-* Aggregate
-* Aggregate Root
-* Entity relationships
+* Requirements analysis
+* Actors and use cases
+* Entities
+* Relationships
+* Business rules
+* Entity vs Value Object
+* Aggregate and Aggregate Root
 * Encapsulation
 * Invariants
-* Domain behavior
-* Business rules
 
-Focus on answering:
+### Key Question
 
-> What should the domain allow?
+> What should the system allow or prevent?
 
-instead of:
+rather than:
 
-> What tables should I create?
+> What tables do I need?
 
 ---
 
-## 3. Clean Architecture
+## Objective 2 — Establish the Architecture
 
 Learn:
 
 * Separation of concerns
+* Clean Architecture
 * Dependency direction
+* Dependency Inversion
 * Domain independence
-* Application layer
-* Infrastructure layer
-* API layer
-* Dependency inversion
+* API vs Application vs Domain vs Infrastructure
 
-Understand why the architecture exists instead of blindly copying folders.
+Review:
 
----
-
-## 4. SOLID in Real Code
-
-Review and apply:
-
-* SRP
-* OCP
-* LSP
-* ISP
-* DIP
-
-The learner should identify where SOLID actually solves a problem.
-
----
-
-## 5. ASP.NET Core Backend Foundations
-
-Review/practice:
-
-* ASP.NET Core pipeline
-* Controllers
-* Routing
-* Model Binding
+* SOLID principles
 * Dependency Injection
-* Configuration
-* Options
-* Environments
-* HTTP status codes
-* REST API conventions
 
 ---
 
-## 6. EF Core Foundations
+## Objective 3 — Build the Persistence Foundation
 
 Learn:
 
@@ -337,75 +297,75 @@ Learn:
 * Fluent API
 * Migrations
 * Constraints
-* Tracking
-* Basic querying
-* Transactions
+* Basic transactions
+* Basic EF Core querying
 
 ---
 
-# 🚀 Project
+# 🚀 Project Work
 
-Build the initial TeamFlow backend.
+Build the first functional version of TeamFlow.
+
+### Organization Management
 
 Implement:
-
-### Organization
 
 * Create organization
 * Get organization
 * Update organization
 
-### Teams
+### Team Management
+
+Implement:
 
 * Create team
-* Add team members
-* Remove team members
-* Get team information
+* Add team member
+* Remove team member
+* Get team members
 
-### Projects
+### Project Management
+
+Implement:
 
 * Create project
 * Get project
 * Update project
 * Archive project
 
-### Project Members
+### Project Membership
+
+Implement:
 
 * Add member
 * Remove member
-* Get project members
+* List members
 
 ---
 
-# 📝 Tasks
+# 📝 Sprint Tasks
 
-### Task 1 — Requirements Analysis
+### Task 1 — Requirements
 
 Document:
 
 * Main actors
 * Main use cases
 * Core entities
-* Main relationships
+* Relationships
 * Initial business rules
-
----
 
 ### Task 2 — Domain Model
 
-Create the initial domain model.
+Design the initial domain model.
 
 Identify:
 
 * Entities
 * Value Objects where appropriate
 * Aggregate Roots
-* Relationships
 * Important invariants
 
----
-
-### Task 3 — Solution Architecture
+### Task 3 — Solution Structure
 
 Create:
 
@@ -416,699 +376,485 @@ Infrastructure
 API
 ```
 
-Configure project dependencies correctly.
+Configure dependency direction correctly.
 
-The Domain should not depend on Infrastructure or API.
+### Task 4 — Database Model
 
----
+Configure:
 
-### Task 4 — Database Design
-
-Design the initial database.
-
-Implement:
-
-* Primary keys
-* Foreign keys
-* Required fields
-* Unique constraints
 * Relationships
-* Indexes where appropriate
+* Foreign keys
+* Required properties
+* Constraints
+* Appropriate indexes
 
----
-
-### Task 5 — Organization APIs
+### Task 5 — Organization Feature
 
 Implement organization use cases.
 
----
-
-### Task 6 — Team APIs
+### Task 6 — Team Feature
 
 Implement team management.
 
----
-
-### Task 7 — Project APIs
+### Task 7 — Project Feature
 
 Implement project management.
 
----
-
 ### Task 8 — Project Membership
 
-Implement adding/removing members.
-
-Include appropriate business rules.
-
----
+Implement project membership rules.
 
 ### Task 9 — API Documentation
 
 Configure Swagger/OpenAPI.
 
-Document the implemented endpoints.
-
 ---
 
-# ✅ Sprint 1 Definition of Done
+# ✅ Sprint 1 Deliverable
 
-The learner should have:
+A working TeamFlow foundation containing:
 
-* Working Clean Architecture solution
-* Initial domain model
+* Clean Architecture
+* Domain model
 * SQL Server database
 * EF Core migrations
 * Organization management
 * Team management
 * Project management
 * Project membership
-* Proper HTTP status codes
 * Swagger documentation
-* Clear separation of responsibilities
 
 ---
 
-# 📅 Sprint 2 — Application Architecture, CQRS & Security
+# 📅 SPRINT 2
 
-## Main Goal
+# Application Architecture, CQRS & Security
 
-Move from basic CRUD architecture to **use-case-oriented application design** while introducing authentication and authorization.
+## Sprint Objective
+
+Transform the initial backend into a **use-case-oriented application** and introduce authentication and authorization.
 
 ---
 
 # 📚 Topics
 
-## 1. Application Layer Design
+## Objective 1 — Use-Case-Oriented Application
 
 Learn:
 
-* Use Cases
+* Application use cases
 * Commands
 * Queries
-* Request/Response models
 * DTOs
-* Application boundaries
-* Mapping
-
----
-
-## 2. CQRS
+* Request/Response models
+* CQRS
+* MediatR
+* Command handlers
+* Query handlers
 
 Understand:
 
-* What CQRS means
-* Command vs Query
-* Why separate them
-* When CQRS is useful
-* When CQRS is unnecessary
+> Why would separating reads and writes make this application easier to reason about?
 
 ---
 
-## 3. MediatR
-
-Learn:
-
-* IRequest
-* IRequestHandler
-* IMediator
-* Command handlers
-* Query handlers
-* Pipeline behaviors
-
----
-
-## 4. Validation
+## Objective 2 — Validation & Application Flow
 
 Learn:
 
 * FluentValidation
-* Request validation
-* Business validation
-* Validation pipeline behavior
-
-Understand the difference between:
-
-```text
-Input Validation
-vs
-Business Rules
-```
-
----
-
-## 5. Result Pattern
-
-Introduce a consistent way to represent:
-
-* Success
-* Validation failure
-* Not Found
-* Business failure
-* Unauthorized/Forbidden scenarios where appropriate
-
----
-
-## 6. Async Programming
-
-Review:
-
+* Validation vs business rules
+* Pipeline behaviors
+* Result Pattern
+* Async/await
 * Task
-* async/await
 * CancellationToken
-* Propagating cancellation
-* Async EF Core operations
+* Cancellation propagation
+
+Implement a validation pipeline.
 
 ---
 
-## 7. Authentication
+## Objective 3 — Authentication & Authorization
 
 Learn:
 
 * ASP.NET Core Identity
 * Password management
-* User registration
-* Login
 * JWT
 * Claims
-* Refresh Tokens
-
----
-
-## 8. Authorization
-
-Learn:
-
 * Roles
-* Claims
 * Policies
+* Refresh Tokens
 * Resource-based authorization
-* Ownership
-* Project membership permissions
+
+Understand the difference between:
+
+```text
+Authentication
+        vs
+Authorization
+```
 
 ---
 
-# 🚀 Project
+# 🚀 Project Work
 
-Convert the existing application to a use-case-oriented architecture.
-
-Add:
+Introduce users and secure TeamFlow.
 
 ### Authentication
 
-* Register
+* Registration
 * Login
-* Refresh Token
-* Logout/revoke refresh token
-
-### Users
-
+* Refresh token
+* Logout/revocation
 * Current user
-* Basic profile
 
-### Project Authorization
+### Authorization
 
-* Project owner
-* Project member
-* Project permissions
+* Organization permissions
+* Project ownership
+* Project membership
+* Project roles
 
-### Task Foundation
+### Tasks Foundation
 
-Introduce:
-
-* Create Task
-* Update Task
-* Assign Task
-* Get Task
+* Create task
+* Update task
+* Assign task
+* Get task
 
 ---
 
-# 📝 Tasks
+# 📝 Sprint Tasks
 
-### Task 1 — Convert Features to CQRS
+### Task 1 — CQRS Conversion
 
-Convert existing major features into:
+Convert important existing features to:
 
 ```text
-Commands
-Queries
-Handlers
-Validators
-DTOs
+Command
+Query
+Handler
+DTO
+Validator
 ```
 
----
+### Task 2 — MediatR
 
-### Task 2 — Implement MediatR
-
-Introduce MediatR for application use cases.
-
-Avoid using MediatR simply for every method without understanding why.
-
----
+Introduce MediatR into application use cases.
 
 ### Task 3 — Validation Pipeline
 
-Create a validation behavior.
-
-Automatically validate commands before handlers execute.
-
----
+Implement automatic command validation.
 
 ### Task 4 — Result Pattern
 
-Introduce a consistent application result model.
-
----
+Introduce consistent application results.
 
 ### Task 5 — Cancellation
 
-Ensure:
-
-```text
-HTTP Request
-      ↓
-Application
-      ↓
-EF Core
-```
-
-properly propagates `CancellationToken`.
-
----
+Propagate cancellation from HTTP request to application and EF Core.
 
 ### Task 6 — Identity
 
 Implement user registration and authentication.
 
----
+### Task 7 — JWT
 
-### Task 7 — JWT Authentication
-
-Implement:
-
-* Access tokens
-* Claims
-* Authentication middleware
-
----
+Implement access-token authentication.
 
 ### Task 8 — Refresh Tokens
 
 Implement:
 
-* Refresh token generation
+* Creation
+* Expiration
 * Rotation/replacement
 * Revocation
-* Expiration
-
----
 
 ### Task 9 — Authorization
 
-Implement policies such as:
+Implement project-level authorization.
 
-```text
-Project Owner
-Project Manager
-Project Member
-```
+### Task 10 — Task Assignment
+
+Only valid project members can be assigned to project tasks.
 
 ---
 
-### Task 10 — Secure Project Operations
+# ✅ Sprint 2 Deliverable
 
-Users should not be able to modify projects they do not have permission to modify.
-
----
-
-### Task 11 — Task Assignment
-
-Only appropriate project members can be assigned to project tasks.
-
----
-
-# ✅ Sprint 2 Definition of Done
-
-The system should now have:
+TeamFlow now contains:
 
 * CQRS
 * MediatR
-* Validation pipeline
+* FluentValidation
 * Result Pattern
-* Async use cases
-* Cancellation support
+* Async application flow
+* Cancellation
 * Identity
-* JWT authentication
-* Refresh tokens
+* JWT
+* Refresh Tokens
 * Claims
-* Roles/policies
-* Resource-based authorization
-* Protected project operations
-* Protected task assignment
+* Policies
+* Project authorization
+* Initial task management
 
 ---
 
-# 📅 Sprint 3 — Rich Domain & API Engineering
+# 📅 SPRINT 3
 
-## Main Goal
+# Rich Domain & API Engineering
 
-Turn TeamFlow from a CRUD application into a system containing **real business behavior and non-trivial API requirements**.
+## Sprint Objective
+
+Move TeamFlow from CRUD-style behavior to a system with **real business rules and useful API capabilities**.
 
 ---
 
 # 📚 Topics
 
-## 1. Rich Domain Model
+## Objective 1 — Rich Domain Behavior
 
 Learn:
 
 * Encapsulation
 * Invariants
-* Domain behavior
+* Business rules
 * State transitions
-* Domain services
-* Domain events — concept and practical usage
+* Domain behavior
+* Domain Services
+* Domain Events — concept and practical usage
+
+Focus on keeping important business rules in the appropriate layer.
 
 ---
 
-## 2. Business Rules
+## Objective 2 — Task Execution Domain
 
-Learn how to represent rules inside the appropriate layer.
+Learn how to model:
 
-Examples:
-
-```text
-A non-member cannot be assigned to a project task.
-
-A completed task cannot be assigned to a new sprint.
-
-A task cannot be completed while required dependencies are incomplete.
-
-A task cannot depend on itself.
-
-Circular dependencies are not allowed.
-```
-
----
-
-## 3. Specification Pattern
-
-Learn:
-
-* Why specifications exist
-* Encapsulating reusable query rules
-* Combining specifications
-* When Specification is useful
-* When it becomes unnecessary abstraction
-
----
-
-## 4. Repository & Unit of Work
-
-Learn:
-
-* Repository Pattern
-* Unit of Work
-* EF Core already providing repository/unit-of-work-like behavior
-* When custom abstractions are useful
-* When they become unnecessary
-
-Implement only where they solve an actual project problem.
-
----
-
-## 5. API Engineering
-
-Learn:
-
-* REST resource design
-* Pagination
-* Filtering
-* Sorting
-* Searching
-* API versioning concepts
-* Consistent API responses
-
----
-
-## 6. Error Handling
-
-Learn:
-
-* Global exception handling
-* ProblemDetails
-* Validation errors
-* Business errors
-* Not Found
-* Conflict
-
----
-
-## 7. Rate Limiting & Idempotency
-
-Understand:
-
-* Why APIs need rate limiting
-* Basic ASP.NET Core rate limiting
-* Idempotent operations
-* Duplicate requests
-* Why retries can create duplicate operations
-
----
-
-# 🚀 Project
-
-Expand TeamFlow with:
-
-* Tasks
-* Task status workflow
+* Task lifecycle
 * Task dependencies
 * Sprints
 * Labels
 * Comments
-* Advanced task search
 
----
-
-# 📝 Tasks
-
-### Task 1 — Task Domain
-
-Implement:
-
-* Task creation
-* Task update
-* Assignment
-* Priority
-* Due date
-* Status
-
----
-
-### Task 2 — Task State Machine
-
-Implement valid transitions.
-
-Example:
+Introduce rules such as:
 
 ```text
-Todo → InProgress
-InProgress → Blocked
-InProgress → Completed
-Blocked → InProgress
-Todo → Cancelled
-```
+A task cannot depend on itself.
 
-Prevent invalid transitions.
+Circular dependencies are not allowed.
 
----
+A non-member cannot be assigned to a project task.
 
-### Task 3 — Task Dependencies
-
-Implement:
-
-* Add dependency
-* Remove dependency
-* Get dependencies
-
----
-
-### Task 4 — Prevent Invalid Dependencies
-
-Prevent:
-
-```text
-Task → itself
-```
-
-and circular relationships:
-
-```text
-A → B
-B → C
-C → A
+A task cannot be completed while required dependencies remain incomplete.
 ```
 
 ---
 
-### Task 5 — Sprint Management
+## Objective 3 — Queryable APIs
 
-Implement:
+Learn and implement:
 
-* Create sprint
-* Start sprint
-* Complete sprint
-* Add tasks
-* Remove tasks
-* Sprint task listing
-
----
-
-### Task 6 — Labels
-
-Implement:
-
-* Create label
-* Assign label
-* Remove label
-* Filter tasks by label
-
----
-
-### Task 7 — Comments
-
-Implement:
-
-* Add comment
-* Update own comment
-* Delete comment
-* Get task comments
-
----
-
-### Task 8 — Specification
-
-Use specifications for meaningful reusable queries.
-
----
-
-### Task 9 — Pagination
-
-Implement pagination for large collections.
-
-Example:
-
-```http
-GET /api/tasks?page=2&pageSize=20
-```
-
----
-
-### Task 10 — Filtering
-
-Support filters such as:
-
-```text
-Status
-Priority
-Assignee
-Sprint
-Label
-Due Date
-```
-
----
-
-### Task 11 — Sorting
-
-Support:
-
-```text
-CreatedAt
-DueDate
-Priority
-Status
-```
-
----
-
-### Task 12 — Searching
-
-Implement task search.
-
-Example:
-
-```http
-GET /api/tasks?search=authentication
-```
-
----
-
-### Task 13 — Global Error Handling
-
-Implement consistent ProblemDetails responses.
-
----
-
-### Task 14 — Rate Limiting
-
-Apply rate limiting to selected endpoints.
-
----
-
-### Task 15 — Idempotent Operation
-
-Choose one suitable operation and make it safely idempotent.
-
----
-
-# ✅ Sprint 3 Definition of Done
-
-TeamFlow should now contain meaningful domain behavior rather than simple CRUD.
-
-The system should support:
-
-* Task lifecycle
-* Business rules
-* Dependencies
-* Sprints
-* Labels
-* Comments
 * Pagination
 * Filtering
 * Searching
 * Sorting
-* ProblemDetails
-* Global exception handling
-* Rate limiting
-* At least one meaningful idempotent operation
+* API versioning concepts
+
+These are learned as part of building a useful Task API, not as isolated topics.
 
 ---
 
-# 📅 Sprint 4 — Data Access, SQL & Performance
+## Objective 4 — Reliable API Behavior
 
-## Main Goal
+Learn:
 
-Teach the learner that a backend can be **functionally correct but technically inefficient**.
+* ProblemDetails
+* Global exception handling
+* Business errors
+* Conflict responses
+* Rate limiting
+* Idempotency
 
-The focus is understanding what happens between:
+---
+
+# 🚀 Project Work
+
+Expand TeamFlow's task management system.
+
+Implement:
+
+### Task Lifecycle
+
+```text
+Todo
+  ↓
+InProgress
+  ↓
+Completed
+```
+
+with additional states such as:
+
+```text
+Blocked
+Cancelled
+```
+
+### Task Dependencies
+
+Support:
+
+* Add dependency
+* Remove dependency
+* List dependencies
+
+### Sprints
+
+Support:
+
+* Create sprint
+* Start sprint
+* Complete sprint
+* Add/remove tasks
+
+### Labels
+
+Support:
+
+* Create label
+* Assign label
+* Remove label
+
+### Comments
+
+Support:
+
+* Add comment
+* Edit own comment
+* Delete own comment
+
+### Task Search
+
+Support:
+
+* Pagination
+* Filtering
+* Sorting
+* Searching
+
+---
+
+# 📝 Sprint Tasks
+
+### Task 1 — Task State Machine
+
+Implement valid state transitions.
+
+### Task 2 — Business Rules
+
+Move important rules into appropriate domain/application boundaries.
+
+### Task 3 — Task Dependencies
+
+Implement dependency management.
+
+### Task 4 — Circular Dependency Prevention
+
+Prevent:
+
+```text
+A → B → C → A
+```
+
+### Task 5 — Sprint Management
+
+Implement sprint lifecycle and task assignment.
+
+### Task 6 — Labels
+
+Implement task labels.
+
+### Task 7 — Comments
+
+Implement task comments with authorization.
+
+### Task 8 — Search API
+
+Implement:
+
+```text
+Pagination
+Filtering
+Sorting
+Searching
+```
+
+### Task 9 — Global Error Handling
+
+Return consistent ProblemDetails responses.
+
+### Task 10 — Rate Limiting
+
+Protect selected endpoints.
+
+### Task 11 — Idempotency
+
+Choose an operation where duplicate requests could cause a real problem and make it safely idempotent.
+
+---
+
+# ✅ Sprint 3 Deliverable
+
+TeamFlow should now behave like a real business application rather than a CRUD API.
+
+It should contain:
+
+* Rich task behavior
+* Business rules
+* Task dependencies
+* Sprint management
+* Labels
+* Comments
+* Search
+* Filtering
+* Sorting
+* Pagination
+* ProblemDetails
+* Rate limiting
+* Idempotency
+
+---
+
+# 📅 SPRINT 4
+
+# Data Access, SQL & Performance
+
+## Sprint Objective
+
+Teach the learner to understand what happens between:
 
 ```text
 LINQ
-↓
+ ↓
 EF Core
-↓
+ ↓
 SQL
-↓
+ ↓
 Database
 ```
+
+and how to identify and solve data-access performance problems.
 
 ---
 
 # 📚 Topics
 
-## 1. EF Core Deep Dive
+## Objective 1 — EF Core Deep Dive
 
 Learn:
 
@@ -1118,7 +864,6 @@ Learn:
 * Projection
 * Tracking vs NoTracking
 * Include
-* ThenInclude
 * Split Queries
 * N+1 Queries
 * Query composition
@@ -1126,76 +871,56 @@ Learn:
 
 ---
 
-## 2. SQL & Database Performance
+## Objective 2 — SQL Performance
 
 Learn:
 
 * Indexes
 * Composite indexes
-* Query plans
-* Basic execution-plan analysis
 * Joins
-* Filtering
-* Sorting
+* Query plans
+* Sorting/filtering performance
 * Locking
 * Transactions
 * Isolation levels
 
 ---
 
-## 3. Optimistic Concurrency
+## Objective 3 — Concurrency
 
-Understand:
+Learn:
 
-* Concurrent updates
 * Lost updates
+* Optimistic concurrency
 * Concurrency tokens
-* Handling `DbUpdateConcurrencyException`
+* DbUpdateConcurrencyException
+* Conflict handling
 
 ---
 
-## 4. Caching
+## Objective 4 — Caching
 
 Learn:
 
 * Why caching exists
-* Cache-aside pattern
-* Cache invalidation
+* Cache-aside
 * TTL
-* Distributed cache concept
-* Redis basics
+* Cache invalidation
+* Redis
+* When caching is useful
+* When caching creates unnecessary complexity
 
 ---
 
-## 5. Performance Investigation
+# 🚀 Project Work
 
-Learn:
+Improve TeamFlow's data-heavy functionality.
 
-```text
-Measure
-↓
-Identify bottleneck
-↓
-Understand root cause
-↓
-Optimize
-↓
-Measure again
-```
+Build:
 
-Do not optimize based on assumptions.
+## Project Dashboard
 
----
-
-# 🚀 Project
-
-Improve TeamFlow's data-heavy features.
-
-Implement:
-
-### Project Dashboard
-
-Example information:
+Display:
 
 * Total tasks
 * Completed tasks
@@ -1204,121 +929,75 @@ Example information:
 * Tasks by status
 * Tasks by priority
 
-### Advanced Search
+## Advanced Task Queries
 
-Build an efficient task search pipeline.
+Build efficient queries for:
 
-### Performance Improvements
+* Search
+* Filtering
+* Sorting
+* Dashboard data
 
-Identify and fix inefficient queries.
+## Caching
 
-### Caching
-
-Cache suitable read-heavy information.
-
----
-
-# 📝 Tasks
-
-### Task 1 — Query Analysis
-
-Inspect generated SQL for important queries.
+Cache appropriate read-heavy operations.
 
 ---
+
+# 📝 Sprint Tasks
+
+### Task 1 — Generated SQL
+
+Inspect SQL generated by EF Core for important queries.
 
 ### Task 2 — Projection
 
-Replace unnecessary entity loading with projections.
-
-Example:
-
-```csharp
-.Select(x => new TaskSummaryDto
-{
-    Id = x.Id,
-    Title = x.Title,
-    Status = x.Status
-})
-```
-
----
+Use projections to avoid unnecessary entity loading.
 
 ### Task 3 — N+1 Investigation
 
-Create an example of an inefficient query.
-
-Measure/observe the issue.
-
-Fix it.
-
-Explain why the fix works.
-
----
+Identify an N+1 problem, explain it, and fix it.
 
 ### Task 4 — Tracking Investigation
 
-Identify where tracking is unnecessary.
-
-Apply `AsNoTracking()` where appropriate.
-
----
+Identify queries where tracking is unnecessary.
 
 ### Task 5 — Include vs Projection
 
-Compare the two approaches for suitable queries.
+Compare both approaches on a real TeamFlow use case.
 
----
+### Task 6 — Database Indexing
 
-### Task 6 — Indexing
+Identify important query patterns and add appropriate indexes.
 
-Identify important query patterns.
+### Task 7 — Query Plan
 
-Add appropriate indexes.
-
----
-
-### Task 7 — Query Plan Investigation
-
-Inspect the database execution plan for at least one expensive query.
-
-Document the bottleneck.
-
----
+Inspect at least one query execution plan.
 
 ### Task 8 — Concurrency
 
-Implement optimistic concurrency for an important entity.
+Implement optimistic concurrency on an important entity.
 
-Handle conflicting updates gracefully.
+### Task 9 — Redis
 
----
-
-### Task 9 — Redis Caching
-
-Add caching for selected read-heavy operations.
-
----
+Introduce Redis for an appropriate read-heavy use case.
 
 ### Task 10 — Cache Invalidation
 
-Ensure relevant write operations invalidate/update affected cache entries.
+Ensure important write operations handle affected cache entries correctly.
 
----
-
-### Task 11 — Project Dashboard
+### Task 11 — Dashboard
 
 Implement efficient dashboard queries.
 
----
-
-### Task 12 — Performance Report
+### Task 12 — Performance Investigation
 
 Document:
 
 ```text
 Problem
 ↓
-Initial behavior
+Observation
 ↓
 Root Cause
 ↓
@@ -1329,112 +1008,90 @@ Result
 
 ---
 
-# ✅ Sprint 4 Definition of Done
+# ✅ Sprint 4 Deliverable
 
 The learner should be able to explain:
 
-* Why `IQueryable` matters
+* IQueryable
 * Deferred execution
+* Expression Trees
 * Projection
 * Tracking
 * N+1
-* Include vs projection
 * Indexes
 * Query plans
 * Transactions
-* Concurrency
-* Caching
+* Isolation
+* Optimistic concurrency
+* Redis
 * Cache invalidation
 
-The project should include measurable improvements to important queries.
+The project should contain documented performance improvements.
 
 ---
 
-# 📅 Sprint 5 — Production Engineering, Background Processing & External Services
+# 📅 SPRINT 5
 
-## Main Goal
+# Production Engineering & External Integrations
 
-Introduce the engineering required when the application starts behaving like a **real production system**.
+## Sprint Objective
+
+Introduce the engineering required when backend operations cannot always happen inside a single HTTP request.
+
+The Sprint revolves around a major project feature:
+
+> **Asynchronous Notifications & Project Activity**
+
+This gives the learner a real reason to learn background processing, logging, external services, and resilience.
 
 ---
 
 # 📚 Topics
 
-## 1. Structured Logging
+## Objective 1 — Production Observability Basics
 
 Learn:
 
-* `ILogger`
+* ILogger
 * Log levels
 * Structured logging
-* Useful log properties
-* Logging exceptions correctly
-* What should and should not be logged
+* Logging useful context
+* Exception logging
+* Correlation IDs
 
 ---
 
-## 2. Correlation
-
-Understand how to trace a request through the application.
-
-Implement a correlation/request ID.
-
----
-
-## 3. Background Processing
+## Objective 2 — Background Processing
 
 Learn:
 
-* `BackgroundService`
+* BackgroundService
 * Hosted Services
-* Queues
-* Background jobs
+* Background queues
 * Cancellation
 * Graceful shutdown
+* Scheduled background work
 
 ---
 
-## 4. Scheduled Jobs
-
-Introduce scheduled/background operations where useful.
-
-Examples:
-
-* Deadline reminders
-* Notification processing
-* Cleanup operations
-
----
-
-## 5. External HTTP Services
+## Objective 3 — External Services
 
 Learn:
 
-* `HttpClient`
-* `IHttpClientFactory`
+* HttpClient
+* IHttpClientFactory
 * Typed clients
 * Timeouts
-* Error handling
+* External failures
 * Retry concepts
 * Circuit breaker concepts
-* External service failures
+* Idempotency when interacting with external systems
 
 ---
 
-## 6. Webhooks / External Integration
+## Objective 4 — AI Integration
 
-Understand:
-
-* External callbacks
-* Signature validation
-* Idempotency
-* Failure handling
-
----
-
-## 7. AI Integration
-
-Learn the backend engineering side of consuming an LLM API:
+Learn the backend side of integrating an LLM API:
 
 * HTTP-based AI APIs
 * Request/response models
@@ -1446,109 +1103,96 @@ Learn the backend engineering side of consuming an LLM API:
 * Timeout handling
 * Prompt injection awareness
 
-No need for:
+The AI portion should remain intentionally limited.
+
+Do not introduce:
 
 * RAG
-* Vector databases
+* Vector Databases
 * LangChain
-* Multi-agent systems
-* Fine-tuning
-
-The goal is backend integration, not AI specialization.
+* Multi-Agent Systems
+* Fine-Tuning
 
 ---
 
-# 🚀 Project
+# 🚀 Project Work
 
-Introduce:
+## Notifications
 
-### Notifications
+Generate notifications for:
 
-Examples:
+* Task assignment
+* Task completion
+* Comments
+* Upcoming deadlines
 
-```text
-Task assigned
-Task completed
-Task approaching deadline
-Comment added
-```
-
-### Activity Feed
+## Activity Feed
 
 Record important project actions.
 
-### Background Processing
+## Background Processing
 
 Process notifications asynchronously.
 
-### External Service
+## External Service
 
 Integrate one external service.
-
-### AI Assistant
-
-Allow users to ask questions about their project.
 
 Example:
 
 ```text
-"What are the overdue tasks in Project X?"
-
-"Which tasks are currently blocked?"
-
-"Summarize the current project status."
+Email / Notification Provider
 ```
 
-The AI should interact with controlled application/domain operations rather than receiving unrestricted database access.
+## AI Project Assistant
+
+Allow users to ask questions such as:
+
+```text
+Which tasks are overdue?
+
+Which tasks are blocked?
+
+Summarize the current project status.
+```
 
 ---
 
-# 📝 Tasks
+# 📝 Sprint Tasks
 
 ### Task 1 — Structured Logging
 
-Improve logs across important application flows.
-
----
+Improve logging around important workflows.
 
 ### Task 2 — Correlation ID
 
 Add request correlation.
 
----
-
 ### Task 3 — Notification Model
 
-Create notification domain/application components.
+Create the notification functionality.
 
----
+### Task 4 — Background Processing
 
-### Task 4 — Background Notification Processing
+Move suitable notification processing outside the HTTP request.
 
-Move notification processing outside the main HTTP request where appropriate.
+### Task 5 — Cancellation
 
----
+Handle application shutdown and cancellation correctly.
 
-### Task 5 — Cancellation & Shutdown
+### Task 6 — Scheduled Operation
 
-Ensure background processing handles cancellation correctly.
-
----
-
-### Task 6 — Scheduled Job
-
-Implement at least one scheduled operation.
+Implement one useful scheduled operation.
 
 Example:
 
 ```text
-Find tasks approaching deadline
-→ Create notifications
+Find tasks approaching their deadline
+        ↓
+Create notifications
 ```
 
----
-
-### Task 7 — External API Client
+### Task 7 — External HTTP Client
 
 Create a typed HTTP client.
 
@@ -1559,59 +1203,40 @@ Handle:
 * Invalid responses
 * Cancellation
 
----
-
 ### Task 8 — Resilience
 
-Add appropriate retry/circuit-breaker behavior where justified.
-
-Do not blindly retry every failure.
-
----
+Apply retry/circuit-breaker behavior where justified.
 
 ### Task 9 — Activity Feed
 
-Record meaningful project activities.
-
----
+Record meaningful project actions.
 
 ### Task 10 — AI Provider Abstraction
 
-Do not tightly couple the application to a specific AI provider.
+Keep AI provider-specific code isolated.
 
----
+### Task 11 — AI Assistant
 
-### Task 11 — AI Project Assistant
+Implement project-related AI queries.
 
-Implement project-related questions.
-
----
-
-### Task 12 — Structured AI Output
-
-Make AI responses follow a predictable structure where appropriate.
-
----
-
-### Task 13 — AI Safety
-
-Prevent the AI integration from directly accessing unrestricted internal resources.
+### Task 12 — AI Safety
 
 Consider:
 
-* Prompt injection
 * Authorization
 * Data exposure
+* Prompt injection
 * Input validation
+* Restricted domain operations
 
 ---
 
-# ✅ Sprint 5 Definition of Done
+# ✅ Sprint 5 Deliverable
 
-The system should now include:
+TeamFlow should now include:
 
 * Structured logging
-* Correlation IDs
+* Correlation
 * Background processing
 * Scheduled operations
 * Notifications
@@ -1619,39 +1244,46 @@ The system should now include:
 * External HTTP integration
 * Basic resilience
 * AI integration
-* Controlled AI/domain interaction
 
 ---
 
-# 📅 Sprint 6 — Unit Testing, Docker & Deployment
+# 📅 SPRINT 6
 
-## Main Goal
+# Unit Testing, Docker & Deployment
 
-Prepare the project to run outside the developer's machine and demonstrate confidence in the most important business logic.
+## Sprint Objective
 
-This sprint intentionally does **not** introduce a large testing ecosystem.
+Take the completed backend from:
 
-The testing scope is:
+> "It works on my machine"
 
-> **Unit Testing only.**
+to:
+
+> "It can be tested, containerized, and deployed."
+
+The testing scope for Level 2 is intentionally limited to:
+
+> **Unit Testing**
+
+No large Integration Testing curriculum is introduced.
 
 ---
 
 # 📚 Topics
 
-## 1. Unit Testing
+## Objective 1 — Unit Testing
 
 Learn:
 
-* What a Unit Test is
+* Unit test fundamentals
 * Arrange / Act / Assert
 * Test isolation
 * Test naming
-* Test readability
 * Testing business rules
-* Testing success/failure paths
+* Testing application use cases
+* Edge cases
 * Mocking dependencies
-* Avoiding over-mocking
+* Avoiding unnecessary mocking
 
 Use:
 
@@ -1659,25 +1291,11 @@ Use:
 xUnit
 ```
 
-and an appropriate mocking library when necessary.
+and a mocking library when needed.
 
 ---
 
-## 2. What Should Be Unit Tested?
-
-Focus primarily on:
-
-* Domain behavior
-* Business rules
-* Application use cases
-* Validation
-* Important edge cases
-
-Do not waste time writing meaningless tests for simple getters/setters.
-
----
-
-## 3. Docker Fundamentals
+## Objective 2 — Docker
 
 Learn:
 
@@ -1694,70 +1312,59 @@ Learn:
 
 ---
 
-## 4. Containerizing the Application
+## Objective 3 — Deployment
 
-Containerize:
-
-```text
-TeamFlow API
-SQL Server
-Redis
-```
-
-where appropriate.
-
----
-
-## 5. Deployment
-
-Learn the fundamentals of deploying the application to a real environment.
-
-Focus on:
+Learn:
 
 * Production configuration
 * Environment variables
-* Connection strings
 * Secrets
-* Database migration strategy
-* HTTPS/basic production considerations
-* Application startup
+* Connection strings
+* Database configuration
 * Container deployment
-
-The deployment target can be a suitable cloud/VPS/platform environment available to the program.
-
----
-
-# 🚀 Project
-
-Finalize TeamFlow as a deployable backend application.
+* Application startup
+* Basic production verification
 
 ---
 
-# 📝 Tasks
+# 🚀 Project Work
 
-## Task 1 — Testing Strategy
+## Unit Tests
 
-Identify the most important business logic that requires unit tests.
+Prioritize meaningful business logic.
 
----
-
-## Task 2 — Domain Tests
-
-Write tests for:
+Test:
 
 * Task state transitions
 * Task assignment rules
 * Dependency rules
 * Sprint rules
-* Important domain invariants
+* Important application use cases
+* Validation
+* Important edge cases
+
+Do not waste time testing trivial getters/setters.
 
 ---
 
-## Task 3 — Application Tests
+# 📝 Sprint Tasks
 
-Test important application use cases.
+### Task 1 — Identify Critical Logic
 
-Examples:
+Select the most important domain and application behavior that requires tests.
+
+### Task 2 — Domain Tests
+
+Test:
+
+* State transitions
+* Business rules
+* Dependencies
+* Invalid operations
+
+### Task 3 — Application Tests
+
+Test important use cases such as:
 
 ```text
 Create Project
@@ -1766,81 +1373,69 @@ Complete Task
 Add Dependency
 ```
 
----
-
-## Task 4 — Validation Tests
+### Task 4 — Validation Tests
 
 Test important validation scenarios.
 
+### Task 5 — Edge Cases
+
+Include scenarios such as:
+
+* Invalid state transition
+* Invalid assignment
+* Circular dependency
+* Unauthorized operation
+* Duplicate operation
+* Missing required data
+
 ---
 
-## Task 5 — Edge Cases
+## Docker Tasks
 
-Add tests for cases such as:
+### Task 6 — Dockerfile
+
+Create a production-oriented Dockerfile.
+
+### Task 7 — Docker Compose
+
+Create a local environment containing:
 
 ```text
-Unauthorized operation
-Invalid state transition
-Missing dependency
-Circular dependency
-Invalid assignment
-Duplicate operation
-```
-
----
-
-## Task 6 — Dockerfile
-
-Create a production-oriented Dockerfile for the API.
-
----
-
-## Task 7 — Docker Compose
-
-Create a Compose setup for:
-
-```text
-API
+TeamFlow API
 SQL Server
 Redis
 ```
 
----
+### Task 8 — Configuration
 
-## Task 8 — Environment Configuration
-
-Move environment-specific values outside the source code.
+Move environment-specific configuration outside source code.
 
 Examples:
 
 ```text
 Connection Strings
-JWT configuration
-AI API keys
-Redis configuration
+JWT Configuration
+Redis Configuration
+AI API Keys
 ```
 
 ---
 
-## Task 9 — Production Configuration
+## Deployment Tasks
 
-Create appropriate production configuration.
+### Task 9 — Production Configuration
 
----
+Prepare the application for deployment.
 
-## Task 10 — Database Deployment
+### Task 10 — Database Strategy
 
-Define how the production database is initialized/migrated safely.
+Define how the production database is initialized or migrated.
 
----
+### Task 11 — Deploy
 
-## Task 11 — Deploy the Application
+Deploy TeamFlow to a real environment.
 
-Deploy the TeamFlow API to a real environment.
-
----
-
-## Task 12 — Production Verification
+### Task 12 — Verify
 
 Verify:
 
@@ -1849,31 +1444,192 @@ Verify:
 * Authentication
 * Important endpoints
 * Background processing
-* Redis connectivity
+* Redis
 * External integrations
 
----
+### Task 13 — Final Refactoring
 
-## Task 13 — Final Cleanup
+Review:
 
-Before final submission:
-
-* Remove dead code
-* Remove unnecessary abstractions
-* Review naming
-* Review architecture
-* Review configuration
-* Review logs
-* Review error handling
-* Review business rules
-* Review API consistency
-* Update README
+* Architecture
+* Naming
+* Dead code
+* Unnecessary abstractions
+* Error handling
+* Business rules
+* Configuration
+* Logging
+* API consistency
 
 ---
 
-# 📦 Final Project Deliverables
+# ✅ Sprint 6 Deliverable
 
-The final TeamFlow repository should contain:
+A deployed TeamFlow backend containing:
+
+* Unit Tests
+* Dockerfile
+* Docker Compose
+* Production configuration
+* SQL Server
+* Redis
+* Deployed API
+* Updated README
+
+---
+
+# 🧠 System Design Throughout Level 2
+
+System Design is **not a separate Sprint**.
+
+It is practiced continuously through the project.
+
+The learner should repeatedly answer questions such as:
+
+### Sprint 1
+
+> Where should this business rule live?
+
+> What is the appropriate aggregate boundary?
+
+### Sprint 2
+
+> Why is this a Command rather than a Query?
+
+> Where should authorization happen?
+
+### Sprint 3
+
+> How should task dependencies behave?
+
+> How should the API handle duplicate requests?
+
+### Sprint 4
+
+> Why is this query slow?
+
+> Should this data be cached?
+
+> What happens when two users update the same record?
+
+### Sprint 5
+
+> Should this operation happen inside the HTTP request?
+
+> What happens if the external service is unavailable?
+
+> What happens if the application crashes during background processing?
+
+### Sprint 6
+
+> What configuration changes between development and production?
+
+> How should the application and its dependencies run together?
+
+System Design therefore becomes a **continuous engineering practice**, not another large syllabus that overloads the learner.
+
+---
+
+# 🔧 Engineering Practices Throughout All Sprints
+
+These practices are not separate topics.
+
+They are part of the way the project is built.
+
+---
+
+## Debugging
+
+Use:
+
+```text
+Symptom
+↓
+Observation
+↓
+Hypothesis
+↓
+Experiment
+↓
+Evidence
+↓
+Root Cause
+↓
+Fix
+↓
+Prevention
+```
+
+---
+
+## Performance
+
+Use:
+
+```text
+Measure
+↓
+Find Bottleneck
+↓
+Understand Root Cause
+↓
+Optimize
+↓
+Measure Again
+```
+
+---
+
+## Architecture Decisions
+
+Before introducing a pattern or abstraction:
+
+```text
+What problem are we solving?
+
+Why is the current solution insufficient?
+
+What alternatives exist?
+
+What complexity does this introduce?
+
+Is this abstraction actually necessary?
+```
+
+---
+
+# 🚫 Explicitly Out of Scope
+
+Level 2 should NOT become a technology-collection course.
+
+The following are intentionally outside the mandatory scope:
+
+* Microservices
+* Kubernetes
+* Terraform
+* Kafka
+* RabbitMQ
+* GraphQL
+* MongoDB
+* PostgreSQL
+* Elasticsearch
+* RAG
+* Vector Databases
+* Multi-Agent Systems
+* Fine-Tuning
+* Advanced Cloud Architecture
+* Integration Testing curriculum
+* Architecture Testing curriculum
+* Large CI/CD curriculum
+* Dedicated System Design curriculum
+
+Additional technologies should only be introduced if they solve a genuine problem in TeamFlow.
+
+---
+
+# 📦 Final Project Structure
+
+The final repository should contain approximately:
 
 ```text
 TeamFlow.sln
@@ -1895,368 +1651,192 @@ README.md
 
 ---
 
-# 📖 README Requirements
+# 📖 Final README
 
-The README should explain:
+The learner should document:
 
-## 1. Project Overview
+## Project Overview
 
 What TeamFlow solves.
 
-## 2. Main Features
+## Architecture
 
-List major capabilities.
+Why the application is structured this way.
 
-## 3. Architecture
+## Domain
 
-Explain:
+Important business concepts and rules.
 
-```text
-API
-Application
-Domain
-Infrastructure
-```
+## Authentication & Authorization
 
-## 4. Domain
+How users and project permissions work.
 
-Explain the major domain concepts.
+## Data Access
 
-## 5. Authentication & Authorization
+Important EF Core and SQL decisions.
 
-Explain the security model.
+## Performance
 
-## 6. Data Access
+At least one real performance problem and its solution.
 
-Explain important EF Core decisions.
+## Background Processing
 
-## 7. Performance
+Why certain operations are asynchronous.
 
-Document at least some performance problems discovered and solved.
+## External Integration
 
-## 8. Background Processing
+How external services are handled.
 
-Explain how background operations work.
+## AI Integration
 
-## 9. External Integrations
+How the AI assistant is isolated and controlled.
 
-Document external services.
+## Testing
 
-## 10. AI Integration
+What business logic is covered by Unit Tests.
 
-Explain the AI architecture and safety boundaries.
+## Docker
 
-## 11. Testing
+How to run the complete local environment.
 
-Explain the Unit Testing strategy.
+## Deployment
 
-## 12. Docker
-
-Explain how to run the application using Docker.
-
-## 13. Deployment
-
-Explain how the application is deployed.
-
----
-
-# 🧠 System Design Throughout the Project
-
-System Design is **not a separate sprint**.
-
-Instead, it is continuously practiced whenever the learner makes an architectural decision.
-
-For example:
-
-### Sprint 1
-
-```text
-How should the domain be modeled?
-Where should this business rule live?
-```
-
-### Sprint 2
-
-```text
-Why CQRS?
-Where should authorization happen?
-What belongs to Application vs Domain?
-```
-
-### Sprint 3
-
-```text
-How should task dependencies work?
-How should pagination be designed?
-How should idempotency work?
-```
-
-### Sprint 4
-
-```text
-What happens when the database becomes slow?
-Where should caching exist?
-Which queries need indexes?
-```
-
-### Sprint 5
-
-```text
-What happens when an external service fails?
-Should this operation be synchronous?
-Should it become a background operation?
-What happens if the process crashes?
-```
-
-### Sprint 6
-
-```text
-How does the application run outside the developer machine?
-What configuration changes in production?
-```
-
-The learner is therefore practicing System Design as part of **building the system**, rather than memorizing a separate System Design syllabus.
-
----
-
-# ⏱️ Suggested 2-Week Sprint Structure
-
-Each sprint represents approximately:
-
-```text
-Week 1
-────────────────────────
-Learning + Implementation
-        ↓
-Core Feature Development
-        ↓
-Mentor Review
-
-Week 2
-────────────────────────
-Advanced Implementation
-        ↓
-Debugging
-        ↓
-Refactoring
-        ↓
-Code Review
-        ↓
-Finalization
-```
-
-With approximately:
-
-```text
-15 hours/week
-≈ 30 hours/sprint
-```
-
-The exact split should remain flexible depending on the learner's progress.
-
----
-
-# 🔍 Engineering Expectations
-
-Throughout all six sprints, learners should repeatedly practice:
-
-### Debugging
-
-```text
-Symptom
-   ↓
-Observation
-   ↓
-Hypothesis
-   ↓
-Experiment
-   ↓
-Evidence
-   ↓
-Root Cause
-   ↓
-Fix
-   ↓
-Prevention
-```
-
-### Performance
-
-```text
-Measure
-   ↓
-Find Bottleneck
-   ↓
-Understand Root Cause
-   ↓
-Optimize
-   ↓
-Measure Again
-```
-
-### Architecture
-
-Before introducing a pattern or abstraction, ask:
-
-```text
-What problem are we solving?
-
-Why is the current solution insufficient?
-
-What are the alternatives?
-
-What complexity does this abstraction introduce?
-
-Is it actually needed?
-```
-
----
-
-# 🚫 What This Level Should NOT Become
-
-The goal is not to collect technologies.
-
-Do not add technologies simply because they are popular.
-
-The project does not need to force:
-
-* Microservices
-* Kafka
-* RabbitMQ
-* Kubernetes
-* Terraform
-* GraphQL
-* MongoDB
-* PostgreSQL
-* Elasticsearch
-* RAG
-* Vector Databases
-* Multi-Agent Systems
-* Advanced Cloud Architecture
-* Complex CI/CD Pipelines
-* Distributed Systems as a dedicated syllabus
-
-unless a genuine project requirement appears.
-
-The learner should leave Level 2 with:
-
-> **One strong backend system they deeply understand**
-
-rather than:
-
-> **A list of technologies they have touched once.**
+How the application is deployed.
 
 ---
 
 # 🎓 Final Level Outcome
 
-After completing Level 2, the learner should be able to take a non-trivial backend requirement and reason through:
+By the end of Level 2, the learner should be able to take a non-trivial backend requirement and work through:
 
 ```text
-Requirements
-      ↓
-Domain Modeling
-      ↓
+Requirement
+     ↓
+Domain Model
+     ↓
 Architecture
-      ↓
-Use Cases
-      ↓
+     ↓
+Use Case
+     ↓
 Business Rules
-      ↓
-API Design
-      ↓
-Data Access
-      ↓
+     ↓
+API
+     ↓
+Database
+     ↓
 Security
-      ↓
+     ↓
 Performance
-      ↓
+     ↓
 Background Processing
-      ↓
-External Integration
-      ↓
+     ↓
+External Services
+     ↓
 Testing
-      ↓
+     ↓
 Docker
-      ↓
+     ↓
 Deployment
 ```
 
-The final project should demonstrate that the learner can build a backend system **end-to-end**, understand the decisions behind it, and explain the trade-offs involved.
+More importantly, the learner should be able to explain **why** each major decision was made.
+
+The final project should demonstrate:
+
+> **Not how many technologies the learner has used, but how well they can engineer a real backend system.**
 
 ---
 
-# 🏁 Final Project Presentation
+# 🏁 Final Project Review
 
-At the end of Level 2, the learner should be able to present:
+At the end of the level, the learner should be able to walk through:
 
 ### 1. The Problem
 
-What does TeamFlow solve?
+What problem does TeamFlow solve?
 
 ### 2. The Domain
 
-What are the major business concepts?
+What are the major domain concepts?
 
 ### 3. The Architecture
 
-Why was the application structured this way?
+Why was the system structured this way?
 
-### 4. The Important Decisions
+### 4. The Business Rules
 
-Why:
+Where are important rules enforced?
 
-* Clean Architecture?
-* CQRS?
-* MediatR?
-* Result Pattern?
-* Repository/Specification where applicable?
-* Redis?
-* Background Processing?
+### 5. Security
 
-### 5. The Difficult Problems
+How are authentication and authorization handled?
 
-Examples:
+### 6. Data Access
 
-* Task dependencies
-* Circular dependency prevention
-* Authorization
-* Concurrency
-* Query performance
-* Background processing
-* External service failures
+How does the system communicate with the database?
 
-### 6. The Production Concerns
+### 7. Performance
 
-How does the system handle:
+What performance problems were discovered and solved?
 
-* Errors
-* Logging
-* Security
-* Performance
-* Background work
-* External services
-* Configuration
-* Deployment
+### 8. Background Processing
 
-### 7. The Trade-offs
+Why were some operations moved outside the HTTP request?
 
-For every major architectural decision:
+### 9. External Services
+
+How does the system handle external failures?
+
+### 10. Testing
+
+Which business-critical behaviors are covered by Unit Tests?
+
+### 11. Deployment
+
+How does TeamFlow run outside the developer's machine?
+
+### 12. Trade-offs
+
+For major architectural decisions:
 
 ```text
 Problem
-→ Options
-→ Decision
-→ Reason
-→ Trade-offs
+   ↓
+Possible Solutions
+   ↓
+Chosen Solution
+   ↓
+Why?
+   ↓
+Trade-offs
 ```
 
-This final discussion is part of the learning experience, not merely a presentation.
+---
 
-# 🎯 Core Philosophy
+# 🎯 Level 2 Philosophy
 
-**Learn → Understand → Build → Break → Debug → Refactor → Explain**
+## Learn → Understand → Build → Break → Debug → Refactor → Explain
 
-The objective of Level 2 is not to make the learner memorize more .NET technologies.
+The learner should finish Level 2 with:
 
-The objective is to make them capable of building, reasoning about, debugging, and improving a **real backend system**.
+**One large project.**
+
+**One coherent architecture.**
+
+**Real business rules.**
+
+**Real engineering problems.**
+
+**Real debugging experience.**
+
+**Real performance work.**
+
+**Real security.**
+
+**Real production concerns.**
+
+**A deployed backend.**
+
+And most importantly:
+
+> **The ability to explain and defend the engineering decisions behind the system.**
