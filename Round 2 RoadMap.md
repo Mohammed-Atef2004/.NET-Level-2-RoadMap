@@ -4,9 +4,66 @@
 
 > **Project:** TeamFlow — Project & Team Operations Platform
 > **Duration:** 6 Sprints × 2 Weeks
-> **Expected Commitment:** ~30 Hours / Sprint
+> **Expected Commitment:** ~15 Hours / Week
+> **Total Commitment:** ~180 Hours
 > **Evaluation:** 100 Points / Sprint
 > **Total:** 600 Points
+
+---
+
+# 🎯 Level 2 Goal
+
+The goal of Level 2 is not to teach as many technologies as possible.
+
+The goal is to teach the learner how to take a non-trivial backend requirement and progressively turn it into a maintainable, secure, testable, production-ready backend system.
+
+The learner should practice:
+
+```text
+Understand
+    ↓
+Model
+    ↓
+Design
+    ↓
+Implement
+    ↓
+Debug
+    ↓
+Refactor
+    ↓
+Test
+    ↓
+Deploy
+    ↓
+Explain
+```
+
+The project evolves throughout the six sprints.
+
+The learner should **not** build six disconnected mini-projects.
+
+---
+
+# 🏗️ TeamFlow
+
+TeamFlow is a project and team operations platform.
+
+The system allows organizations to:
+
+* Create teams
+* Manage team members
+* Create projects
+* Manage project members
+* Create and manage tasks
+* Assign tasks
+* Track task completion
+* Organize project work
+* Receive notifications
+* Use an AI assistant
+* Purchase a paid capability
+
+The system will gradually evolve from a basic backend into a production-oriented application.
 
 ---
 
@@ -14,9 +71,9 @@
 
 ## 🎯 Sprint Goal
 
-Build the architectural and domain foundation of TeamFlow.
+Build the architectural and persistence foundation of TeamFlow.
 
-The learner should move from:
+The learner should be able to move from:
 
 ```text
 Requirements
@@ -32,28 +89,22 @@ Persistence
 Working API
 ```
 
-The goal is **not** to teach DDD.
-
-The goal is to teach the learner how to understand a business problem, model it correctly, separate responsibilities, and build a maintainable backend foundation.
+The focus is **practical domain modeling and architecture**, not learning DDD as a separate subject.
 
 ---
 
 # 📚 What You Will Learn
 
-## 1. Domain Modeling
+## 1. Requirements Analysis
 
 Learn:
 
-* Requirements analysis
-* Actors and use cases
-* Entities
+* Actors
+* Use cases
+* Functional requirements
 * Relationships
-* Value Objects where appropriate
-* Business rules
-* Invariants
-* Encapsulation
-* Entity responsibilities
-* Domain vs application responsibilities
+* Initial business rules
+* Identifying important domain concepts
 
 Key question:
 
@@ -61,11 +112,27 @@ Key question:
 
 Not:
 
-> What tables should I create?
+> What database tables should I create?
 
 ---
 
-## 2. Clean Architecture
+# 2. Domain Modeling
+
+Learn:
+
+* Entities
+* Relationships
+* Encapsulation
+* Business responsibilities
+* Invariants
+* Value Objects where appropriate
+* Domain vs application responsibilities
+
+The learner should understand why a behavior belongs to a particular part of the system.
+
+---
+
+# 3. Clean Architecture
 
 Learn:
 
@@ -77,7 +144,6 @@ Learn:
 * Infrastructure layer
 * API layer
 * Dependency Injection
-* SOLID principles in practical architecture
 
 Target structure:
 
@@ -91,27 +157,28 @@ TeamFlow.Infrastructure
 TeamFlow.API
 ```
 
+Infrastructure implements abstractions defined by the inner layers.
+
 ---
 
-## 3. Repository Pattern
+# 4. Repository Design
 
 Learn:
 
 * Repository abstraction
-* Why abstractions exist
 * Repository responsibilities
 * Repository vs DbContext
-* Repository vs service
-* When a repository abstraction is useful
-* Avoiding unnecessary generic abstractions
+* Repository vs application service
+* When an abstraction is useful
+* Avoiding unnecessary generic repositories
 
-The learner should understand:
+Important principle:
 
 > A repository is not simply a wrapper around every DbSet method.
 
 ---
 
-## 4. EF Core Persistence
+# 5. EF Core Persistence
 
 Learn:
 
@@ -120,19 +187,17 @@ Learn:
 * Entity configuration
 * Fluent API
 * Relationships
-* Foreign Keys
+* Foreign keys
 * Constraints
+* Indexes where appropriate
 * Migrations
-* Transactions
-* Persistence boundaries
+* Basic transaction boundaries
 
 The learner is expected to already understand database fundamentals.
 
 ---
 
 # 🛠️ Practical Implementation
-
-Build the first version of TeamFlow.
 
 ## Organization
 
@@ -141,6 +206,8 @@ Implement:
 * Create organization
 * Get organization
 * Update organization
+
+---
 
 ## Team
 
@@ -151,6 +218,8 @@ Implement:
 * Remove member
 * Get members
 
+---
+
 ## Project
 
 Implement:
@@ -159,6 +228,8 @@ Implement:
 * Get project
 * Update project
 * Archive project
+
+---
 
 ## Project Membership
 
@@ -211,9 +282,9 @@ Configure dependency direction correctly.
 
 ---
 
-### Task 4 — Repository Abstraction
+### Task 4 — Repository Abstractions
 
-Create repository abstractions for the parts of the system that genuinely need them.
+Create repository abstractions only where they provide meaningful value.
 
 Implement them inside Infrastructure.
 
@@ -227,7 +298,7 @@ Configure:
 * Foreign keys
 * Required fields
 * Constraints
-* Indexes where appropriate
+* Important indexes
 * Migrations
 
 ---
@@ -266,16 +337,24 @@ Configure Swagger/OpenAPI.
 
 The learner must submit:
 
-### 1. Domain Model
+### 1. Requirements Document
 
-A documented model showing:
+Containing:
+
+* Actors
+* Use cases
+* Core business rules
+
+### 2. Domain Model
+
+Showing:
 
 * Entities
 * Relationships
 * Responsibilities
-* Business rules
+* Important invariants
 
-### 2. Architecture Diagram
+### 3. Architecture Diagram
 
 Showing:
 
@@ -291,38 +370,39 @@ Infrastructure
 
 and the dependency direction.
 
-### 3. Solution
+### 4. TeamFlow Solution
 
-Working TeamFlow solution with:
+Containing:
 
 * Domain
 * Application
 * Infrastructure
 * API
 
-### 4. Persistence
+### 5. Persistence
 
 * SQL Server
 * EF Core
+* Fluent configurations
 * Migrations
-* Proper relationships
+* Relationships
 
-### 5. Features
+### 6. Features
 
 * Organization
 * Team
 * Project
 * Project Membership
 
-### 6. Architecture Explanation
+### 7. Architecture Explanation
 
-Short document answering:
+Answer:
 
 > Why does each layer exist?
 
 > Why is this dependency direction used?
 
-> Why are repositories placed behind abstractions?
+> Why are repositories abstracted?
 
 ---
 
@@ -330,21 +410,19 @@ Short document answering:
 
 | Area                                      |  Points |
 | ----------------------------------------- | ------: |
-| Requirements & Domain Modeling            |      15 |
-| Clean Architecture & Dependency Direction |      20 |
+| Requirements & Domain Modeling            |      20 |
+| Clean Architecture & Dependency Direction |      25 |
 | Repository Design                         |      15 |
-| EF Core Persistence                       |      15 |
-| Feature Implementation                    |      20 |
-| Code Quality & Organization               |       5 |
-| Documentation & Architecture Explanation  |      10 |
+| EF Core Persistence                       |      20 |
+| Feature Implementation                    |      15 |
+| Documentation & Explanation               |       5 |
 | **Total**                                 | **100** |
 
 ---
 
 # ✅ Definition of Done
 
-Sprint 1 is complete when:
-
+* [ ] Requirements are documented
 * [ ] Domain model is documented
 * [ ] Architecture is correctly separated
 * [ ] Dependency direction is correct
@@ -372,7 +450,7 @@ By the end of Sprint 1, the learner should be able to take a business requiremen
 
 Transform TeamFlow from a basic API into a **use-case-oriented application**.
 
-The learner will understand how requests move through:
+The learner should understand:
 
 ```text
 HTTP Request
@@ -388,7 +466,7 @@ Domain
 Infrastructure
 ```
 
-and secure the application using Authentication and Authorization.
+and implement authentication and authorization.
 
 ---
 
@@ -402,13 +480,12 @@ Learn:
 * Commands
 * Queries
 * DTOs
-* Request/Response models
-* Application services
+* Request/response models
 * Separation between API and Application
 
 ---
 
-## 2. CQRS
+# 2. CQRS
 
 Learn:
 
@@ -416,36 +493,39 @@ Learn:
 * Query
 * Command Handler
 * Query Handler
-* Read vs Write responsibilities
+* Read vs write responsibilities
 * Why CQRS can improve application organization
 * When CQRS adds unnecessary complexity
 
+The learner should understand CQRS as an organizational pattern, not as a requirement for distributed systems.
+
 ---
 
-## 3. MediatR
+# 3. MediatR
 
 Learn:
 
-* Mediator Pattern
+* Mediator pattern
 * Request/Handler
-* Notifications
-* Pipeline Behaviors
+* Notifications where appropriate
+* Pipeline behaviors
 * Dependency flow
 
 ---
 
-## 4. Validation
+# 4. Validation
 
 Learn:
 
 * FluentValidation
+* Input validation
 * Validation vs business rules
 * Validation pipeline
 * Validation behavior
 
 ---
 
-## 5. Result Pattern
+# 5. Result Pattern
 
 Learn:
 
@@ -457,7 +537,7 @@ Learn:
 
 ---
 
-## 6. Async Programming
+# 6. Async Programming
 
 Learn:
 
@@ -469,7 +549,7 @@ Learn:
 
 ---
 
-## 7. Authentication
+# 7. Authentication
 
 Learn:
 
@@ -477,26 +557,39 @@ Learn:
 * Password management
 * JWT
 * Claims
-* Refresh Tokens
-* Logout / revocation
+* Refresh tokens
+* Token expiration
+* Token revocation
+* Logout
 
 ---
 
-## 8. Authorization
+# 8. Authorization
 
 Learn:
 
-* Roles
+* Authentication vs authorization
+* Claims
 * Policies
-* Claims-based authorization
-* Resource-based authorization
-* Authentication vs Authorization
+* Project-level authorization
+* Resource authorization
+
+Keep authorization intentionally simple.
+
+Example:
+
+```text
+Project Owner
+Project Member
+```
+
+No unnecessary role hierarchy.
 
 ---
 
 # 🛠️ Practical Implementation
 
-## Authentication
+# Authentication
 
 Implement:
 
@@ -509,26 +602,26 @@ Implement:
 
 ---
 
-## Authorization
+# Authorization
 
-Implement:
+Implement project-level authorization.
 
-* Organization permissions
-* Project permissions
-* Project membership
-* Project roles
-* Resource authorization
+Examples:
+
+* Project owner can update project
+* Project member can access project
+* Unauthorized users cannot access project data
 
 ---
 
-## Tasks Foundation
+# Task Foundation
 
 Implement:
 
 * Create task
+* Get task
 * Update task
 * Assign task
-* Get task
 
 ---
 
@@ -554,7 +647,7 @@ Introduce MediatR for application use cases.
 
 ---
 
-### Task 3 — Pipeline Behavior
+### Task 3 — Validation Pipeline
 
 Implement automatic validation through a MediatR pipeline behavior.
 
@@ -623,12 +716,13 @@ The learner must submit:
 * MediatR implementation
 * Validation pipeline
 * Result Pattern
+* Cancellation propagation
 * Authentication
 * JWT
 * Refresh Tokens
 * Authorization
 * Task feature
-* Short explanation of request flow
+* Request-flow explanation
 
 The learner should be able to explain:
 
@@ -656,15 +750,14 @@ Infrastructure
 
 | Area                        |  Points |
 | --------------------------- | ------: |
-| Application Architecture    |      10 |
-| CQRS Design                 |      15 |
+| Application Architecture    |      15 |
+| CQRS Design                 |      20 |
 | MediatR Implementation      |      15 |
 | Validation & Result Pattern |      10 |
 | Async / Cancellation        |      10 |
 | Authentication              |      15 |
-| Authorization               |      15 |
+| Authorization               |      10 |
 | Task Feature                |       5 |
-| Code Quality & Explanation  |       5 |
 | **Total**                   | **100** |
 
 ---
@@ -680,7 +773,7 @@ Infrastructure
 * [ ] Login works
 * [ ] JWT works
 * [ ] Refresh tokens work
-* [ ] Revocation works
+* [ ] Token revocation works
 * [ ] Authorization rules work
 * [ ] Task foundation works
 * [ ] Learner can explain CQRS and Mediator decisions
@@ -693,78 +786,62 @@ The learner should now understand how to structure a non-trivial application aro
 
 ---
 
-# 📅 Sprint 3 — Business Rules & Advanced API Engineering
+# 📅 Sprint 3 — Business Rules & API Engineering
 
 ## 🎯 Sprint Goal
 
-Move TeamFlow beyond CRUD.
+Move TeamFlow beyond basic CRUD.
 
-The learner should learn how to represent **real business behavior** and build an API that behaves predictably under real usage.
+The learner should understand that backend engineering is largely about controlling **business behavior and API behavior**, not simply creating endpoints.
 
 ---
 
 # 📚 What You Will Learn
 
-## 1. Business Rules
+## 1. Practical Business Rules
 
 Learn:
 
 * Business rules
 * Invariants
 * Encapsulation
-* State transitions
 * Domain behavior
 * Application rules
-* Domain Services where appropriate
+* Where business rules should be enforced
 
-No DDD course is introduced.
+Examples:
+
+```text
+A member cannot be added twice.
+
+A user cannot be assigned a task
+if they are not a project member.
+
+Only authorized users can modify a project.
+
+A project cannot be modified
+after it has been archived.
+```
 
 The focus is practical business modeling.
 
 ---
 
-## 2. Task Lifecycle
+# 2. Task Management
 
-Model:
+Extend the Task feature with:
 
-```text
-Todo
- ↓
-InProgress
- ↓
-Completed
-```
+* Create
+* Update
+* Assign
+* Complete
+* Reopen
 
-with additional states:
-
-```text
-Blocked
-Cancelled
-```
-
-The system must control valid transitions.
+The system should enforce appropriate business rules.
 
 ---
 
-## 3. Task Dependencies
-
-Learn how to model:
-
-```text
-Task A
-  ↓ depends on
-Task B
-```
-
-including:
-
-* Dependency creation
-* Dependency removal
-* Circular dependency prevention
-
----
-
-## 4. Advanced API Querying
+# 3. Advanced API Querying
 
 Learn:
 
@@ -773,99 +850,61 @@ Learn:
 * Searching
 * Sorting
 * Query parameters
-* API versioning
+* Query composition with EF Core
+
+Example:
+
+```text
+GET /api/projects/{projectId}/tasks
+    ?page=1
+    &pageSize=20
+    &status=Completed
+    &search=authentication
+    &sortBy=createdAt
+```
 
 ---
 
-## 5. API Error Handling
+# 4. API Error Handling
 
 Learn:
 
 * ProblemDetails
 * Global exception handling
-* Business errors
 * Validation errors
+* NotFound responses
 * Conflict responses
+* Unauthorized responses
+* Forbidden responses
 * Consistent error contracts
 
 ---
 
-## 6. Reliability
+# 5. Idempotency
 
 Learn:
 
-* Rate limiting
-* Idempotency
-* Duplicate requests
+* Why duplicate requests happen
+* Why duplicate operations can be dangerous
+* Idempotency keys
 * Safe retry behavior
+
+Implement idempotency for **one appropriate operation only**.
 
 ---
 
 # 🛠️ Practical Implementation
 
-## Task Lifecycle
-
-Implement controlled state transitions.
-
-Example:
-
-```text
-Todo → InProgress
-InProgress → Completed
-InProgress → Blocked
-Blocked → InProgress
-Todo → Cancelled
-```
-
-Invalid transitions must be rejected.
-
----
-
-## Task Dependencies
+## Task Management
 
 Implement:
 
-* Add dependency
-* Remove dependency
-* List dependencies
+* Complete Task
+* Reopen Task
+* Assign Task
+* Update Task
 
-Prevent:
-
-```text
-A → B → C → A
-```
-
----
-
-## Sprints
-
-Implement:
-
-* Create sprint
-* Start sprint
-* Complete sprint
-* Add task
-* Remove task
-
----
-
-## Labels
-
-Implement:
-
-* Create label
-* Assign label
-* Remove label
-
----
-
-## Comments
-
-Implement:
-
-* Add comment
-* Edit own comment
-* Delete own comment
+Enforce relevant business rules.
 
 ---
 
@@ -882,84 +921,101 @@ Searching
 
 ---
 
-# 📝 Sprint Tasks
-
-### Task 1 — Task State Machine
-
-Implement valid state transitions.
-
----
-
-### Task 2 — Business Rules
-
-Identify and enforce important TeamFlow business rules.
-
----
-
-### Task 3 — Dependency Management
-
-Implement task dependencies.
-
----
-
-### Task 4 — Circular Dependency Prevention
-
-Prevent dependency cycles.
-
----
-
-### Task 5 — Sprint Management
-
-Implement sprint lifecycle.
-
----
-
-### Task 6 — Labels
-
-Implement task labels.
-
----
-
-### Task 7 — Comments
-
-Implement comments with proper authorization.
-
----
-
-### Task 8 — Advanced Search
+## Error Handling
 
 Implement:
 
-* Pagination
-* Filtering
-* Sorting
-* Searching
+```text
+Request
+   ↓
+Application
+   ↓
+Business / Validation Error
+   ↓
+Consistent ProblemDetails Response
+```
 
 ---
 
-### Task 9 — ProblemDetails
+## Idempotency
 
-Create a consistent API error contract.
+Choose one operation where duplicate requests could cause a real problem.
+
+Implement safe handling for duplicate requests.
 
 ---
 
-### Task 10 — Global Exception Handling
+# 📝 Sprint Tasks
+
+### Task 1 — Business Rules
+
+Identify important TeamFlow business rules.
+
+---
+
+### Task 2 — Business Rule Enforcement
+
+Implement the rules in appropriate layers.
+
+---
+
+### Task 3 — Task Completion
+
+Implement task completion.
+
+---
+
+### Task 4 — Task Reopening
+
+Implement task reopening.
+
+---
+
+### Task 5 — Task Assignment Rules
+
+Ensure users can only be assigned tasks when they satisfy the required project rules.
+
+---
+
+### Task 6 — Pagination
+
+Implement reusable pagination for an appropriate read endpoint.
+
+---
+
+### Task 7 — Filtering
+
+Implement useful filtering.
+
+---
+
+### Task 8 — Sorting
+
+Implement controlled sorting.
+
+---
+
+### Task 9 — Searching
+
+Implement basic database-backed searching.
+
+---
+
+### Task 10 — ProblemDetails
+
+Implement a consistent API error contract.
+
+---
+
+### Task 11 — Global Exception Handling
 
 Handle unexpected exceptions consistently.
 
 ---
 
-### Task 11 — Rate Limiting
-
-Protect selected endpoints.
-
----
-
 ### Task 12 — Idempotency
 
-Choose a real operation where duplicate requests could cause a problem.
-
-Make it safely idempotent.
+Implement idempotency for one suitable operation.
 
 ---
 
@@ -967,23 +1023,17 @@ Make it safely idempotent.
 
 The learner must submit:
 
-* Task lifecycle
 * Business rules
-* Dependencies
-* Circular dependency protection
-* Sprint management
-* Labels
-* Comments
-* Search API
+* Task management improvements
 * Pagination
 * Filtering
 * Sorting
+* Searching
 * ProblemDetails
 * Global exception handling
-* Rate limiting
-* Idempotency
+* One idempotent operation
 
-Plus a short document explaining:
+Plus a short document answering:
 
 > Which rules were implemented?
 
@@ -997,13 +1047,10 @@ Plus a short document explaining:
 
 | Area                                      |  Points |
 | ----------------------------------------- | ------: |
-| Business Rules & Modeling                 |      20 |
-| Task Lifecycle                            |      10 |
-| Dependencies & Cycle Prevention           |      10 |
-| Sprint / Label / Comment Features         |      15 |
-| Pagination / Filtering / Sorting / Search |      15 |
-| Error Handling & ProblemDetails           |      10 |
-| Rate Limiting                             |       5 |
+| Business Rules & Modeling                 |      25 |
+| Task Management                           |      15 |
+| Pagination / Filtering / Sorting / Search |      25 |
+| Error Handling & ProblemDetails           |      20 |
 | Idempotency                               |      10 |
 | Code Quality & Explanation                |       5 |
 | **Total**                                 | **100** |
@@ -1012,21 +1059,18 @@ Plus a short document explaining:
 
 # ✅ Definition of Done
 
-* [ ] Task lifecycle is enforced
-* [ ] Invalid state transitions fail
-* [ ] Dependencies work
-* [ ] Circular dependencies are prevented
-* [ ] Sprints work
-* [ ] Labels work
-* [ ] Comments work
-* [ ] Search works
+* [ ] Important business rules are enforced
+* [ ] Task completion works
+* [ ] Task reopening works
+* [ ] Task assignment rules work
 * [ ] Pagination works
 * [ ] Filtering works
 * [ ] Sorting works
+* [ ] Searching works
 * [ ] ProblemDetails is consistent
 * [ ] Global exceptions are handled
-* [ ] Rate limiting works
-* [ ] At least one operation is idempotent
+* [ ] One operation is idempotent
+* [ ] Learner can explain where business rules belong
 
 ---
 
@@ -1034,21 +1078,29 @@ Plus a short document explaining:
 
 TeamFlow should no longer behave like a simple CRUD application.
 
-The learner should understand how backend engineering is largely about **controlling business behavior and system behavior**, not just creating endpoints.
+The learner should understand how to build APIs that enforce business behavior and provide predictable responses.
 
 ---
 
-# 📅 Sprint 4 — Production Engineering & Reliability
+# 📅 Sprint 4 — Production Engineering
 
 ## 🎯 Sprint Goal
 
-Teach the learner how to handle work that should not necessarily happen inside a single HTTP request and how to communicate safely with external systems.
+Introduce a small number of production-oriented concerns without turning the sprint into a DevOps or distributed-systems curriculum.
+
+The learner will focus on:
+
+```text
+Observability
+Background Processing
+Caching
+```
 
 ---
 
 # 📚 What You Will Learn
 
-## 1. Logging
+# 1. Logging
 
 Learn:
 
@@ -1057,11 +1109,36 @@ Learn:
 * Structured logging
 * Useful context
 * Exception logging
-* Correlation IDs
+* Logging important workflows
+
+The focus is writing useful logs, not simply adding logs everywhere.
 
 ---
 
-## 2. Background Processing
+# 2. Correlation IDs
+
+Learn:
+
+* What a correlation ID is
+* Why request correlation is useful
+* How to attach correlation information to logs
+* How to trace a request through application logs
+
+Basic flow:
+
+```text
+HTTP Request
+      ↓
+Correlation ID
+      ↓
+Application
+      ↓
+Logs
+```
+
+---
+
+# 3. Background Processing
 
 Learn:
 
@@ -1070,130 +1147,97 @@ Learn:
 * Background queues
 * Cancellation
 * Graceful shutdown
-* Scheduled work
-
-Understand:
-
-> When should work leave the HTTP request?
+* When work should leave the HTTP request
 
 ---
 
-## 3. Redis
+# 4. Redis Caching
 
 Learn:
 
 * Why caching exists
-* Cache-aside
+* Cache-aside pattern
 * TTL
 * Cache invalidation
 * Redis
-* Choosing what should be cached
+* Choosing appropriate data to cache
 
----
+The learner should understand:
 
-## 4. External HTTP Services
-
-Learn:
-
-* HttpClient
-* IHttpClientFactory
-* Typed clients
-* Timeouts
-* HTTP failures
-* Invalid responses
-* Cancellation
-
----
-
-## 5. Resilience
-
-Learn practical concepts:
-
-* Retry
-* Exponential backoff
-* Circuit breaker
-* Timeout
-* Idempotency
-* External service failure handling
-
-The goal is not to study resilience theory.
-
-The goal is to make a real integration safer.
+> Caching is a trade-off, not automatically an optimization.
 
 ---
 
 # 🛠️ Practical Implementation
 
-## Notifications
+# Notification System
 
-Generate notifications for:
+Create a simple notification workflow.
 
-* Task assignment
-* Task completion
-* Comments
-* Upcoming deadlines
-
----
-
-## Activity Feed
-
-Record important project activities.
-
----
-
-## Background Processing
-
-Move suitable notification work outside the HTTP request.
-
----
-
-## Scheduled Operation
-
-Implement:
+Examples:
 
 ```text
-Find tasks approaching deadline
-          ↓
-Create notifications
+Task Assigned
+Task Completed
 ```
 
 ---
 
-## Redis
+# Background Processing
 
-Choose an appropriate read-heavy TeamFlow operation.
+Instead of performing notification work directly inside the HTTP request:
 
-Examples:
+```text
+HTTP Request
+      ↓
+Application
+      ↓
+Background Queue
+      ↓
+Background Worker
+      ↓
+Notification Processing
+```
 
-* Project summary
-* Frequently accessed project information
-* User/project permissions
+Use:
+
+* BackgroundService
+* A simple in-process background queue
+* CancellationToken
+
+No message broker is required.
+
+---
+
+# Redis
+
+Choose one read-heavy TeamFlow operation.
+
+Example:
+
+```text
+GET Project Summary
+```
 
 Implement:
 
 ```text
 Request
- ↓
-Cache
- ↓
+   ↓
+Redis
+   ↓
+Cache Hit → Response
+
 Cache Miss
- ↓
+   ↓
 Database
- ↓
-Cache
+   ↓
+Redis
+   ↓
+Response
 ```
 
----
-
-## External Service
-
-Integrate one external HTTP service.
-
-Example:
-
-```text
-Email / Notification Provider
-```
+Implement appropriate invalidation when relevant data changes.
 
 ---
 
@@ -1211,27 +1255,27 @@ Implement request correlation.
 
 ---
 
-### Task 3 — Notification System
+### Task 3 — Notification Model
 
-Create the notification model and workflow.
-
----
-
-### Task 4 — Background Processing
-
-Move notification processing outside the request lifecycle.
+Create the notification model and application workflow.
 
 ---
 
-### Task 5 — Cancellation & Shutdown
+### Task 4 — Background Queue
 
-Handle application shutdown correctly.
+Create a simple in-process background queue.
 
 ---
 
-### Task 6 — Scheduled Operation
+### Task 5 — Background Worker
 
-Implement deadline-based notification generation.
+Process notification work outside the HTTP request.
+
+---
+
+### Task 6 — Cancellation
+
+Handle cancellation and application shutdown correctly.
 
 ---
 
@@ -1241,58 +1285,28 @@ Introduce Redis for one justified use case.
 
 ---
 
-### Task 8 — Cache Invalidation
+### Task 8 — Cache-Aside
 
-Ensure relevant write operations invalidate/update affected cache entries.
+Implement:
 
----
-
-### Task 9 — Typed HTTP Client
-
-Create a typed client for an external service.
-
----
-
-### Task 10 — External Failure Handling
-
-Handle:
-
-* Timeout
-* HTTP errors
-* Invalid responses
-* Cancellation
+```text
+Cache Hit
+Cache Miss
+Database
+Cache Population
+```
 
 ---
 
-### Task 11 — Resilience
+### Task 9 — Cache Invalidation
 
-Apply retry/circuit-breaker behavior where justified.
-
----
-
-### Task 12 — Activity Feed
-
-Record meaningful project actions.
+Ensure relevant write operations invalidate or update affected cached data.
 
 ---
 
-# 📦 Sprint Deliverables
+### Task 10 — Production Scenario
 
-The learner must submit:
-
-* Structured logging
-* Correlation ID
-* Notification system
-* Background processing
-* Scheduled operation
-* Redis caching
-* Cache invalidation
-* External HTTP integration
-* Timeout handling
-* Retry/resilience
-* Activity feed
-
-And document at least one production failure scenario:
+Document one failure scenario:
 
 ```text
 Scenario
@@ -1310,36 +1324,50 @@ Recovery
 
 ---
 
-# 📊 Evaluation — 100 Points
+# 📦 Sprint Deliverables
 
-| Area                                |  Points |
-| ----------------------------------- | ------: |
-| Logging & Correlation               |      10 |
-| Background Processing               |      20 |
-| Scheduled Processing                |      10 |
-| Redis & Caching                     |      15 |
-| Cache Invalidation                  |      10 |
-| External HTTP Integration           |      15 |
-| Resilience & Failure Handling       |      15 |
-| Activity / Notification Integration |       5 |
-| **Total**                           | **100** |
+The learner must submit:
+
+* Structured logging
+* Correlation ID
+* Notification system
+* Background queue
+* Background worker
+* Cancellation/shutdown handling
+* Redis integration
+* Cache-aside implementation
+* Cache invalidation
+* One documented production failure scenario
 
 ---
 
-# ✅ Definition of Done
+# 📊 Evaluation — 100 Points
 
-* [ ] Structured logging exists
-* [ ] Correlation ID exists
-* [ ] Notifications are implemented
-* [ ] Notifications can be processed asynchronously
-* [ ] Scheduled operation works
-* [ ] Cancellation is handled
-* [ ] Redis is integrated
-* [ ] Cache invalidation works
-* [ ] External HTTP client works
-* [ ] Timeout/error handling exists
-* [ ] Resilience is applied where justified
-* [ ] Activity feed works
+| Area                        |  Points |
+| --------------------------- | ------: |
+| Logging & Correlation       |      20 |
+| Background Processing       |      35 |
+| Redis & Caching             |      30 |
+| Failure Handling            |      10 |
+| Explanation & Documentation |       5 |
+| **Total**                   | **100** |
+
+---
+
+# ❌ Explicitly Out of Scope for Sprint 4
+
+The learner does NOT need to implement:
+
+* Kafka
+* RabbitMQ
+* MassTransit
+* Distributed queues
+* OpenTelemetry
+* Complex scheduling systems
+* Activity feeds
+* External HTTP integrations
+* Circuit breakers as a separate topic
+* Complex distributed caching
 
 ---
 
@@ -1351,7 +1379,7 @@ The learner should understand that backend systems do not consist only of:
 Request → Controller → Database → Response
 ```
 
-They should understand background work, caching, external dependencies, failures, and operational behavior.
+They should understand basic background processing, logging, caching, cancellation, and production-oriented failure handling.
 
 ---
 
@@ -1359,9 +1387,7 @@ They should understand background work, caching, external dependencies, failures
 
 ## 🎯 Sprint Goal
 
-Introduce **real verification and external business integrations**.
-
-The learner will test important behavior and integrate two realistic external capabilities:
+Teach the learner how to verify important backend behavior and safely integrate two realistic external systems:
 
 ```text
 TeamFlow
@@ -1369,15 +1395,15 @@ TeamFlow
    └── Payment Gateway
 ```
 
-The focus is not learning AI or payments as isolated technologies.
+The focus is not learning AI or payment systems as separate curricula.
 
-The focus is learning how a backend integrates with external systems safely.
+The focus is learning how a backend communicates safely with external providers.
 
 ---
 
 # 📚 What You Will Learn
 
-## 1. Unit Testing
+# 1. Unit Testing
 
 Learn:
 
@@ -1394,30 +1420,29 @@ Do not waste time testing trivial getters/setters.
 
 ---
 
-## 2. Integration Testing
+# 2. Integration Testing
 
 Learn:
 
 * What integration testing verifies
-* API-level testing
-* Real dependency boundaries
+* HTTP-level testing
+* Real application pipeline
 * Test database strategy
 * Authentication in integration tests
-* HTTP request/response testing
 * Test isolation
 
-Focus on meaningful integration tests.
+Focus on important application flows rather than testing every endpoint.
 
 ---
 
-## 3. AI Integration
+# 3. AI Integration
 
-Learn backend concepts behind integrating an LLM API:
+Learn the backend concerns behind integrating an LLM API:
 
 * HTTP-based AI APIs
 * Request/response models
 * Prompt construction
-* Structured output
+* Structured output where useful
 * Provider abstraction
 * Token/cost awareness
 * Rate limits
@@ -1425,9 +1450,7 @@ Learn backend concepts behind integrating an LLM API:
 * Prompt injection awareness
 * Authorization and data exposure
 
-Use OpenAI/ChatGPT API or an equivalent LLM provider.
-
-Do NOT introduce:
+The learner should NOT build:
 
 * RAG
 * Vector databases
@@ -1437,7 +1460,7 @@ Do NOT introduce:
 
 ---
 
-## 4. Payment Integration
+# 4. Payment Integration
 
 Learn:
 
@@ -1445,90 +1468,118 @@ Learn:
 * Payment intent/order creation
 * External payment API
 * Payment status
-* Redirect/checkout flow
+* Checkout flow
 * Webhooks
 * Signature verification
 * Idempotency
-* Payment state transitions
 * External failure handling
 
 ---
 
 # 🛠️ Practical Implementation
 
-# Part A — Testing
+# Part A — Unit Testing
 
 Test important business behavior.
 
 Examples:
 
 ```text
-Complete Task
 Assign Task
-Add Dependency
-Reject Circular Dependency
-Change Task State
-Start Sprint
-Complete Sprint
+Complete Task
+Reopen Task
+Archive Project
+Add Member
 ```
+
+Focus on behavior and edge cases.
 
 ---
 
-## Integration Tests
+# Part B — Integration Testing
 
-Create integration tests for important API flows.
+Create integration tests for a limited number of critical workflows.
 
 Examples:
 
 ```text
-Register
-Login
+Register → Login
+
 Create Project
-Create Task
-Assign Task
+
+Create Task → Assign Task
+
 Complete Task
 ```
 
-Verify the actual application pipeline.
+The goal is to verify the actual application pipeline.
 
 ---
 
-# Part B — AI Assistant
+# Part C — AI Assistant
 
 Create:
 
 ```text
-Project AI Assistant
+TeamFlow AI Assistant
 ```
 
-Users can ask:
+Users can ask questions such as:
 
 ```text
 Which tasks are overdue?
 
-Which tasks are blocked?
+Which tasks are incomplete?
 
 Summarize the current project status.
 
 What are the most important unfinished tasks?
 ```
 
-The AI should only receive information the current user is authorized to access.
+The AI must only receive data that the current user is authorized to access.
 
 ---
 
-# Part C — Payment
+# AI Request Flow
 
-Introduce a paid TeamFlow capability.
+```text
+User
+ ↓
+API
+ ↓
+Authorization
+ ↓
+Application
+ ↓
+Retrieve allowed project data
+ ↓
+Build AI request
+ ↓
+AI Provider
+ ↓
+Response
+```
+
+The AI provider must not receive unrestricted database access.
+
+---
+
+# Part D — Payment
+
+Introduce one paid TeamFlow capability.
 
 Example:
 
 ```text
 Organization
-    ↓
-Subscription / Paid Feature
-    ↓
-Payment Gateway
+      ↓
+Paid Capability
+      ↓
+Payment
+      ↓
+Webhook
+      ↓
+Update Subscription / Entitlement
 ```
 
 Implement:
@@ -1547,144 +1598,122 @@ Implement:
 
 ### Task 1 — Unit Test Strategy
 
-Identify the most important logic that requires unit tests.
+Identify the most important business logic and use cases that require unit tests.
 
 ---
 
-### Task 2 — Domain Unit Tests
+### Task 2 — Business Rule Unit Tests
 
 Test:
 
-* State transitions
-* Business rules
-* Dependencies
-* Invalid operations
+* Task assignment rules
+* Task completion
+* Task reopening
+* Project membership rules
+* Important invalid operations
 
 ---
 
 ### Task 3 — Application Unit Tests
 
-Test important use cases.
+Test important application use cases.
 
 ---
 
-### Task 4 — Validation Tests
-
-Test important validation scenarios.
-
----
-
-### Task 5 — Integration Test Infrastructure
+### Task 4 — Integration Test Infrastructure
 
 Create the infrastructure required to run integration tests.
 
 ---
 
-### Task 6 — API Integration Tests
+### Task 5 — Critical API Integration Tests
 
-Test important HTTP workflows.
+Test a small number of important HTTP workflows.
 
 ---
 
-### Task 7 — AI Provider Abstraction
+### Task 6 — AI Provider Abstraction
 
 Create an abstraction around the AI provider.
 
-Avoid spreading provider-specific code across the application.
+Avoid spreading provider-specific implementation across the application.
 
 ---
 
-### Task 8 — AI Assistant
+### Task 7 — AI Assistant
 
 Implement project-related AI queries.
 
 ---
 
-### Task 9 — AI Authorization
+### Task 8 — AI Authorization
 
 Ensure users cannot ask the AI about project data they cannot access.
 
 ---
 
-### Task 10 — AI Failure Handling
+### Task 9 — AI Failure Handling
 
 Handle:
 
 * Timeout
 * Provider failure
 * Rate limiting
-* Invalid response
+* Invalid responses
 
 ---
 
-### Task 11 — Payment Gateway Integration
+### Task 10 — Payment Gateway Integration
 
 Integrate one payment provider.
 
 ---
 
-### Task 12 — Payment State Machine
+### Task 11 — Payment Status
 
-Represent payment states clearly.
-
-Example:
-
-```text
-Pending
-   ↓
-Paid
-
-Pending
-   ↓
-Failed
-
-Pending
-   ↓
-Cancelled
-```
+Track payment status and update the appropriate TeamFlow entitlement.
 
 ---
 
-### Task 13 — Webhooks
+### Task 12 — Payment Webhook
 
-Implement payment webhook processing.
-
----
-
-### Task 14 — Signature Verification
-
-Verify that payment notifications actually come from the payment provider.
+Implement the payment webhook endpoint.
 
 ---
 
-### Task 15 — Webhook Idempotency
+### Task 13 — Signature Verification
 
-Ensure the same webhook cannot process the same payment twice.
+Verify that webhook notifications are authentic.
+
+---
+
+### Task 14 — Webhook Idempotency
+
+Ensure duplicate webhook delivery cannot process the same event twice.
 
 ---
 
 # 📦 Sprint Deliverables
 
-The learner must submit:
-
-### Testing
+## Testing
 
 * Unit tests
-* Integration tests
+* Important integration tests
 * Business-rule coverage
 * Application-flow coverage
 
-### AI
+## AI
 
 * AI provider abstraction
 * Project AI assistant
 * Authorization
-* Error handling
+* Timeout handling
+* Provider failure handling
 
-### Payment
+## Payment
 
 * Payment integration
-* Payment state handling
+* Payment status handling
 * Webhook endpoint
 * Signature verification
 * Idempotent webhook processing
@@ -1693,47 +1722,50 @@ The learner must submit:
 
 # 📊 Evaluation — 100 Points
 
-| Area                                 |  Points |
-| ------------------------------------ | ------: |
-| Unit Testing                         |      20 |
-| Integration Testing                  |      15 |
-| Test Quality & Edge Cases            |      10 |
-| AI Integration                       |      15 |
-| AI Security / Authorization          |      10 |
-| Payment Integration                  |      15 |
-| Webhooks & Signature Verification    |      10 |
-| Payment Idempotency / State Handling |       5 |
-| **Total**                            | **100** |
+| Area                        |  Points |
+| --------------------------- | ------: |
+| Unit Testing                |      25 |
+| Integration Testing         |      15 |
+| AI Integration              |      20 |
+| AI Security & Authorization |      10 |
+| Payment Integration         |      20 |
+| Webhooks & Idempotency      |      10 |
+| **Total**                   | **100** |
 
 ---
 
-# ✅ Definition of Done
+# ❌ Explicitly Out of Scope for Sprint 5
 
-* [ ] Important business rules have unit tests
-* [ ] Important use cases have unit tests
-* [ ] Important API flows have integration tests
-* [ ] AI provider is isolated
-* [ ] AI assistant works
-* [ ] AI access respects authorization
-* [ ] AI failures are handled
-* [ ] Payment gateway is integrated
-* [ ] Payment states are handled
-* [ ] Webhook works
-* [ ] Webhook signature is verified
-* [ ] Duplicate webhook processing is prevented
+The learner does NOT need to implement:
+
+* RAG
+* Vector databases
+* AI agents
+* Multi-agent systems
+* Fine-tuning
+* Multiple AI providers
+* Multiple payment providers
+* Complex subscription billing
+* Advanced payment reconciliation
+* Advanced test automation frameworks
+* Large-scale test coverage targets
 
 ---
 
 # 🎓 Expected Outcome
 
-The learner should now understand how to verify backend behavior and integrate external systems where:
+The learner should understand how to verify backend behavior and integrate external systems where:
 
 ```text
 Your System
      ↓
 External Provider
      ↓
-Success / Failure / Timeout / Duplicate Request
+Success
+Failure
+Timeout
+Duplicate Request
+Unauthorized Data
 ```
 
 must all be handled safely.
@@ -1752,11 +1784,13 @@ to:
 
 > "It can be built, tested, containerized, and deployed consistently."
 
+The goal is practical deployment knowledge, not a full DevOps curriculum.
+
 ---
 
 # 📚 What You Will Learn
 
-## 1. Docker
+# 1. Docker
 
 Learn:
 
@@ -1767,44 +1801,40 @@ Learn:
 * Run
 * Ports
 * Environment variables
-* Volumess
 * Networks
 * Docker Compose
 
 ---
 
-## 2. Production Configuration
+# 2. Production Configuration
 
 Learn:
 
 * Environment variables
-* Secrets
 * Connection strings
 * JWT configuration
 * Redis configuration
 * AI API keys
 * Payment configuration
-* Production settings
+* Environment-specific settings
 
 No secrets should be committed to source control.
 
 ---
 
-## 3. CI/CD
+# 3. CI/CD
 
 Learn the practical basics of:
 
 * GitHub Actions
-* Workflow
+* Workflows
 * Jobs
 * Steps
+* Restore
 * Build
 * Test
 * Docker build
-* Environment configuration
 * Deployment
-
-The goal is **not** to teach DevOps as a separate curriculum.
 
 ---
 
@@ -1813,24 +1843,22 @@ The goal is **not** to teach DevOps as a separate curriculum.
 The learner should build approximately:
 
 ```text
-Git Push
-   ↓
+Git Push / Pull Request
+        ↓
 GitHub Actions
-   ↓
+        ↓
 Restore
-   ↓
+        ↓
 Build
-   ↓
+        ↓
 Unit Tests
-   ↓
+        ↓
 Integration Tests
-   ↓
+        ↓
 Docker Build
-   ↓
-Docker Image
-   ↓
+        ↓
 Deployment
-   ↓
+        ↓
 Health Verification
 ```
 
@@ -1838,13 +1866,13 @@ Health Verification
 
 # 🛠️ Practical Implementation
 
-## Docker
+# Docker
 
 Create a production-oriented Dockerfile.
 
 ---
 
-## Docker Compose
+# Docker Compose
 
 Create a local environment containing:
 
@@ -1856,9 +1884,9 @@ Redis
 
 ---
 
-## Configuration
+# Configuration
 
-Move environment-specific values outside source code.
+Move environment-specific values outside the source code.
 
 Examples:
 
@@ -1872,9 +1900,17 @@ Payment API Keys
 
 ---
 
-## CI Pipeline
+# Secrets
 
-Create GitHub Actions workflow:
+Ensure secrets are not committed to Git.
+
+Use environment configuration or the appropriate CI/CD secret mechanism.
+
+---
+
+# CI Pipeline
+
+Create a GitHub Actions workflow:
 
 ```text
 Push / Pull Request
@@ -1890,7 +1926,7 @@ Integration Tests
 
 ---
 
-## Docker Pipeline
+# Docker Pipeline
 
 Extend the workflow:
 
@@ -1906,9 +1942,9 @@ Image
 
 ---
 
-## Deployment
+# Deployment
 
-Deploy TeamFlow to a real environment.
+Deploy TeamFlow to a real hosting environment.
 
 The exact hosting provider is not the primary learning objective.
 
@@ -2029,9 +2065,9 @@ Document:
 * Authorization
 * Data access
 * Background processing
-* External integrations
-* AI
-* Payment
+* Caching
+* AI integration
+* Payment integration
 * Testing
 * Docker
 * CI/CD
@@ -2054,6 +2090,7 @@ The learner must submit:
 * Deployed API
 * Production verification
 * Final README
+* Final refactoring
 
 ---
 
@@ -2061,14 +2098,11 @@ The learner must submit:
 
 | Area                       |  Points |
 | -------------------------- | ------: |
-| Dockerfile                 |      15 |
-| Docker Compose             |      10 |
-| Configuration & Secrets    |      10 |
-| GitHub Actions CI          |      20 |
-| Automated Testing in CI    |      10 |
-| Docker Image Build         |      10 |
+| Dockerfile                 |      25 |
+| Docker Compose             |      15 |
+| Configuration & Secrets    |      15 |
+| GitHub Actions CI/CD       |      25 |
 | Deployment                 |      15 |
-| Production Verification    |       5 |
 | Final README & Refactoring |       5 |
 | **Total**                  | **100** |
 
@@ -2119,14 +2153,18 @@ and should be able to explain what happens at each stage.
 
 # 🏁 Final Level Completion
 
-A learner completes Level 2 when all six Sprints are completed and the final TeamFlow system contains:
+A learner completes Level 2 when all six sprints are completed and TeamFlow contains:
 
 ```text
+Requirements Analysis
+        ↓
 Domain Modeling
         ↓
 Clean Architecture
         ↓
 Repository Abstractions
+        ↓
+EF Core Persistence
         ↓
 CQRS
         ↓
@@ -2145,8 +2183,6 @@ Advanced API Engineering
 Background Processing
         ↓
 Redis / Caching
-        ↓
-External Services
         ↓
 Unit Testing
         ↓
@@ -2169,15 +2205,15 @@ Deployment
 
 # 📊 Final Evaluation
 
-| Sprint                                      |  Points |
-| ------------------------------------------- | ------: |
-| Sprint 1 — Architecture & Persistence       |     100 |
-| Sprint 2 — CQRS & Security                  |     100 |
-| Sprint 3 — Business Rules & API Engineering |     100 |
-| Sprint 4 — Production Engineering           |     100 |
-| Sprint 5 — Testing & Integrations           |     100 |
-| Sprint 6 — Docker, CI/CD & Deployment       |     100 |
-| **TOTAL**                                   | **600** |
+| Sprint    | Focus                                     |  Points |
+| --------- | ----------------------------------------- | ------: |
+| Sprint 1  | Domain, Architecture & Persistence        |     100 |
+| Sprint 2  | CQRS, Application Architecture & Security |     100 |
+| Sprint 3  | Business Rules & API Engineering          |     100 |
+| Sprint 4  | Production Engineering                    |     100 |
+| Sprint 5  | Testing, AI & Payment                     |     100 |
+| Sprint 6  | Docker, CI/CD & Deployment                |     100 |
+| **TOTAL** |                                           | **600** |
 
 ---
 
@@ -2185,69 +2221,157 @@ Deployment
 
 At the end of Level 2, the learner must be able to explain:
 
-## 1. Domain
+## 1. Requirements
+
+What problem does TeamFlow solve?
+
+What are its main actors and use cases?
+
+---
+
+## 2. Domain
 
 What does TeamFlow represent?
 
-## 2. Architecture
+What are the important entities and business rules?
+
+---
+
+## 3. Architecture
 
 Why is the solution structured this way?
 
-## 3. Repository
+Why does each layer exist?
 
-Why is a repository abstraction used here?
+---
 
-## 4. Application
+## 4. Repository
+
+Why is a repository abstraction used?
+
+Where would a repository abstraction become unnecessary?
+
+---
+
+## 5. Application
 
 Why are commands and queries separated?
 
-## 5. MediatR
+Where does application logic belong?
 
-Why is the Mediator pattern used?
+---
 
-## 6. Business Rules
+## 6. MediatR
 
-Where are important rules enforced?
+What problem does the Mediator pattern solve?
 
-## 7. Security
+What complexity does it introduce?
+
+---
+
+## 7. Business Rules
+
+Where are important business rules enforced?
+
+Why are they enforced there?
+
+---
+
+## 8. Security
 
 How are authentication and authorization handled?
 
-## 8. API
+What is the difference between authentication and authorization?
 
-How does the API handle errors, duplicates, pagination, and rate limits?
+---
 
-## 9. Background Processing
+## 9. API
 
-Why should some operations happen outside the HTTP request?
+How does the API handle:
 
-## 10. Caching
+* Validation?
+* Errors?
+* Pagination?
+* Filtering?
+* Searching?
+* Sorting?
+* Duplicate requests?
+
+---
+
+## 10. Background Processing
+
+Why should some work happen outside the HTTP request?
+
+What happens if the background worker is cancelled?
+
+---
+
+## 11. Caching
 
 Why is this data cached?
 
-## 11. External Services
+What is the cache invalidation strategy?
 
-What happens when an external provider fails?
+What happens when Redis is unavailable?
+
+---
 
 ## 12. AI
 
-How is AI access isolated and controlled?
+How is AI access isolated?
+
+How do you ensure the AI only receives authorized project information?
+
+What happens when the provider fails?
+
+---
 
 ## 13. Payment
 
-How are payment state, webhooks, signatures, and duplicates handled?
+How does the payment lifecycle work?
+
+How are webhooks verified?
+
+How are duplicate webhooks handled?
+
+---
 
 ## 14. Testing
 
-What behavior is covered by Unit and Integration Tests?
+What behavior is covered by unit tests?
+
+What application flows are covered by integration tests?
+
+Why were these cases selected?
+
+---
 
 ## 15. Deployment
 
-How does TeamFlow move from source code to a running production system?
+How does TeamFlow move from source code to a running environment?
+
+```text
+Source Code
+ ↓
+CI
+ ↓
+Build
+ ↓
+Tests
+ ↓
+Docker
+ ↓
+Deployment
+ ↓
+Verification
+```
+
+---
 
 ## 16. Trade-offs
 
-For major decisions:
+For important architectural decisions, the learner should be able to explain:
 
 ```text
 Problem
@@ -2261,6 +2385,16 @@ Why?
 Trade-offs
 ```
 
+The learner should not be rewarded for choosing the most sophisticated technology.
+
+The learner should be rewarded for choosing a solution that is:
+
+* Appropriate
+* Understandable
+* Maintainable
+* Justified
+* Consistent with the project's requirements
+
 ---
 
 # 🧠 Engineering Practice Throughout All Sprints
@@ -2269,7 +2403,9 @@ These are not separate lessons.
 
 They are part of how the learner is evaluated throughout the project.
 
-## Debugging
+---
+
+# 1. Debugging
 
 Use:
 
@@ -2291,7 +2427,13 @@ Fix
 Prevention
 ```
 
-## Architecture Decisions
+The learner should avoid:
+
+> "Change random code until it works."
+
+---
+
+# 2. Architecture Decisions
 
 Before introducing an abstraction:
 
@@ -2307,7 +2449,9 @@ What complexity does this introduce?
 Is the abstraction actually necessary?
 ```
 
-## Performance
+---
+
+# 3. Performance
 
 Use:
 
@@ -2323,6 +2467,24 @@ Optimize
 Measure Again
 ```
 
+Performance optimization should be evidence-driven.
+
+---
+
+# 4. Code Review
+
+Throughout the project, review:
+
+* Naming
+* Responsibility boundaries
+* Duplication
+* Abstractions
+* Error handling
+* Security
+* Query efficiency
+* Maintainability
+* Testability
+
 ---
 
 # 🚫 Explicitly Out of Scope
@@ -2334,18 +2496,26 @@ The following are NOT mandatory for Level 2:
 * Terraform
 * Kafka
 * RabbitMQ
+* MassTransit
 * GraphQL
 * MongoDB
 * PostgreSQL
 * Elasticsearch
 * RAG
-* Vector Databases
-* Multi-Agent Systems
-* Fine-Tuning
-* Advanced Cloud Architecture
-* Dedicated System Design Sprint
+* Vector databases
+* Multi-agent systems
+* Fine-tuning
+* Advanced cloud architecture
+* Dedicated system design curriculum
 * Large DevOps curriculum
-* Architecture Testing curriculum
+* OpenTelemetry
+* Advanced distributed systems
+* Complex event-driven architecture
+* Complex task dependency graphs
+* Circular dependency detection
+* Advanced payment systems
+* Multiple AI providers
+* Multiple payment providers
 
 Additional technologies should only be introduced when they solve a genuine TeamFlow problem.
 
@@ -2379,18 +2549,26 @@ The goal is not:
 
 The goal is:
 
-> Can the learner take a non-trivial backend requirement, engineer a solution, handle real problems, and explain the decisions behind it?
+> Can the learner take a non-trivial backend requirement, engineer a maintainable solution, handle realistic problems, test important behavior, deploy the system, and explain the decisions behind it?
+
+---
+
+# Final Principle
 
 **One Project.**
 
 **One Evolving Architecture.**
 
+**Focused Scope.**
+
 **Real Business Rules.**
 
-**Real Integrations.**
+**Two External Integrations.**
 
-**Real Testing.**
+**Meaningful Testing.**
 
 **Real Deployment.**
 
 **Real Engineering Decisions.**
+
+**No Technology for Technology's Sake.**
