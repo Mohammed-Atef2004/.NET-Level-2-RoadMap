@@ -76,8 +76,6 @@ Build the architectural and persistence foundation of TeamFlow.
 The learner should be able to move from:
 
 ```text
-Requirements
-    ↓
 Domain Model
     ↓
 Business Rules
@@ -95,28 +93,7 @@ The focus is **practical domain modeling and architecture**, not learning DDD as
 
 # 📚 What You Will Learn
 
-## 1. Requirements Analysis
-
-Learn:
-
-* Actors
-* Use cases
-* Functional requirements
-* Relationships
-* Initial business rules
-* Identifying important domain concepts
-
-Key question:
-
-> What does the business actually allow or prevent?
-
-Not:
-
-> What database tables should I create?
-
----
-
-# 2. Domain Modeling
+## 1. Domain Modeling
 
 Learn:
 
@@ -132,7 +109,7 @@ The learner should understand why a behavior belongs to a particular part of the
 
 ---
 
-# 3. Clean Architecture
+# 2. Clean Architecture
 
 Learn:
 
@@ -161,7 +138,7 @@ Infrastructure implements abstractions defined by the inner layers.
 
 ---
 
-# 4. Repository Design
+# 3. Repository Design
 
 Learn:
 
@@ -178,7 +155,7 @@ Important principle:
 
 ---
 
-# 5. EF Core Persistence
+# 4. EF Core Persistence
 
 Learn:
 
@@ -243,19 +220,7 @@ Implement:
 
 # 📝 Sprint Tasks
 
-### Task 1 — Requirements Analysis
-
-Document:
-
-* Actors
-* Main use cases
-* Core entities
-* Relationships
-* Initial business rules
-
----
-
-### Task 2 — Domain Model
+### Task 1 — Domain Model
 
 Create a domain model containing:
 
@@ -267,7 +232,7 @@ Create a domain model containing:
 
 ---
 
-### Task 3 — Architecture
+### Task 2 — Architecture
 
 Create:
 
@@ -282,7 +247,7 @@ Configure dependency direction correctly.
 
 ---
 
-### Task 4 — Repository Abstractions
+### Task 3 — Repository Abstractions
 
 Create repository abstractions only where they provide meaningful value.
 
@@ -290,7 +255,7 @@ Implement them inside Infrastructure.
 
 ---
 
-### Task 5 — EF Core Persistence
+### Task 4 — EF Core Persistence
 
 Configure:
 
@@ -303,31 +268,31 @@ Configure:
 
 ---
 
-### Task 6 — Organization Feature
+### Task 5 — Organization Feature
 
 Implement the Organization use cases.
 
 ---
 
-### Task 7 — Team Feature
+### Task 6 — Team Feature
 
 Implement Team management.
 
 ---
 
-### Task 8 — Project Feature
+### Task 7 — Project Feature
 
 Implement Project management.
 
 ---
 
-### Task 9 — Project Membership
+### Task 8 — Project Membership
 
 Implement membership rules.
 
 ---
 
-### Task 10 — API Documentation
+### Task 9 — API Documentation
 
 Configure Swagger/OpenAPI.
 
@@ -337,15 +302,7 @@ Configure Swagger/OpenAPI.
 
 The learner must submit:
 
-### 1. Requirements Document
-
-Containing:
-
-* Actors
-* Use cases
-* Core business rules
-
-### 2. Domain Model
+### 1. Domain Model
 
 Showing:
 
@@ -354,7 +311,7 @@ Showing:
 * Responsibilities
 * Important invariants
 
-### 3. Architecture Diagram
+### 2. Architecture Diagram
 
 Showing:
 
@@ -370,7 +327,7 @@ Infrastructure
 
 and the dependency direction.
 
-### 4. TeamFlow Solution
+### 3. TeamFlow Solution
 
 Containing:
 
@@ -379,7 +336,7 @@ Containing:
 * Infrastructure
 * API
 
-### 5. Persistence
+### 4. Persistence
 
 * SQL Server
 * EF Core
@@ -387,14 +344,14 @@ Containing:
 * Migrations
 * Relationships
 
-### 6. Features
+### 5. Features
 
 * Organization
 * Team
 * Project
 * Project Membership
 
-### 7. Architecture Explanation
+### 6. Architecture Explanation
 
 Answer:
 
@@ -410,7 +367,7 @@ Answer:
 
 | Area                                      |  Points |
 | ----------------------------------------- | ------: |
-| Requirements & Domain Modeling            |      20 |
+| Domain Modeling                            |      20 |
 | Clean Architecture & Dependency Direction |      25 |
 | Repository Design                         |      15 |
 | EF Core Persistence                       |      20 |
@@ -422,7 +379,6 @@ Answer:
 
 # ✅ Definition of Done
 
-* [ ] Requirements are documented
 * [ ] Domain model is documented
 * [ ] Architecture is correctly separated
 * [ ] Dependency direction is correct
@@ -2156,8 +2112,6 @@ and should be able to explain what happens at each stage.
 A learner completes Level 2 when all six sprints are completed and TeamFlow contains:
 
 ```text
-Requirements Analysis
-        ↓
 Domain Modeling
         ↓
 Clean Architecture
@@ -2221,15 +2175,7 @@ Deployment
 
 At the end of Level 2, the learner must be able to explain:
 
-## 1. Requirements
-
-What problem does TeamFlow solve?
-
-What are its main actors and use cases?
-
----
-
-## 2. Domain
+## 1. Domain
 
 What does TeamFlow represent?
 
@@ -2237,7 +2183,7 @@ What are the important entities and business rules?
 
 ---
 
-## 3. Architecture
+## 1. Architecture
 
 Why is the solution structured this way?
 
@@ -2245,7 +2191,7 @@ Why does each layer exist?
 
 ---
 
-## 4. Repository
+## 1. Repository
 
 Why is a repository abstraction used?
 
@@ -2253,7 +2199,7 @@ Where would a repository abstraction become unnecessary?
 
 ---
 
-## 5. Application
+## 1. Application
 
 Why are commands and queries separated?
 
@@ -2261,7 +2207,7 @@ Where does application logic belong?
 
 ---
 
-## 6. MediatR
+## 1. MediatR
 
 What problem does the Mediator pattern solve?
 
@@ -2269,7 +2215,7 @@ What complexity does it introduce?
 
 ---
 
-## 7. Business Rules
+## 1. Business Rules
 
 Where are important business rules enforced?
 
@@ -2277,7 +2223,7 @@ Why are they enforced there?
 
 ---
 
-## 8. Security
+## 1. Security
 
 How are authentication and authorization handled?
 
@@ -2285,7 +2231,7 @@ What is the difference between authentication and authorization?
 
 ---
 
-## 9. API
+## 1. API
 
 How does the API handle:
 
@@ -2299,7 +2245,7 @@ How does the API handle:
 
 ---
 
-## 10. Background Processing
+## 1. Background Processing
 
 Why should some work happen outside the HTTP request?
 
@@ -2307,7 +2253,7 @@ What happens if the background worker is cancelled?
 
 ---
 
-## 11. Caching
+## 1. Caching
 
 Why is this data cached?
 
@@ -2317,7 +2263,7 @@ What happens when Redis is unavailable?
 
 ---
 
-## 12. AI
+## 1. AI
 
 How is AI access isolated?
 
@@ -2327,7 +2273,7 @@ What happens when the provider fails?
 
 ---
 
-## 13. Payment
+## 1. Payment
 
 How does the payment lifecycle work?
 
@@ -2337,7 +2283,7 @@ How are duplicate webhooks handled?
 
 ---
 
-## 14. Testing
+## 1. Testing
 
 What behavior is covered by unit tests?
 
@@ -2347,7 +2293,7 @@ Why were these cases selected?
 
 ---
 
-## 15. Deployment
+## 1. Deployment
 
 How does TeamFlow move from source code to a running environment?
 
@@ -2369,7 +2315,7 @@ Verification
 
 ---
 
-## 16. Trade-offs
+## 1. Trade-offs
 
 For important architectural decisions, the learner should be able to explain:
 
